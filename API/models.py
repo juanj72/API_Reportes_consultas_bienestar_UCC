@@ -11,3 +11,4 @@ class django_migrations(models.Model):
     applied =models.DateTimeField()
     class Meta:
         db_table='django_migrations'
+        
