@@ -22,6 +22,8 @@ class ejemplo_request(APIView):
         if serializer.is_valid():
             nombre = serializer.validated_data['estado']
             edad = serializer.validated_data['edad']
-            return Response({'mensaje': f'Hola, {nombre} de {edad} años!'})
+            otra_variable=serializer.validated_data['otra_variable']
+            
+            return Response({'mensaje': f'Hola, {nombre} de {edad} años! y esta es otra variable: {otra_variable}'})
         else:
             return Response(serializer.errors, status=400)
