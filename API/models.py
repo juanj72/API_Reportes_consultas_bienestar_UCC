@@ -30,6 +30,7 @@ from django.db import models
 # Create your models here.
 
 class administrativo(models.Model):
+    idAdministrativo=models.IntegerField(primary_key=True)
     nombre = models.CharField(max_length=80)
     apellido = models.CharField(max_length=80)
     cargo =  models.CharField(max_length=80)

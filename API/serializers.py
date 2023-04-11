@@ -30,3 +30,8 @@ class programas_serializador(serializers.ModelSerializer):
     class Meta:
         model=programa
         fields='__all__'
+
+class administrativos_serializer(serializers.ModelSerializer):
+    class Meta:
+        model=administrativo
+        fields='__all__'

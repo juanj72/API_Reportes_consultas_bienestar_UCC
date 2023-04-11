@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from API.models import django_migrations,evento,programa
+from API.models import django_migrations,evento,programa,administrativo
 from API.serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -50,3 +50,8 @@ class unico_evento(APIView):
 class programas_lista(ListAPIView):
     queryset=programa.objects.all()
     serializer_class=programas_serializador
+
+
+class administrativos_total(ListAPIView):
+    queryset=administrativo.objects.all()
+    serializer_class=administrativos_serializer
