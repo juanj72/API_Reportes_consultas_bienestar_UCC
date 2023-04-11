@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from API.models import django_migrations
+from API.models import django_migrations,evento,programa
 from API.serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
+from rest_framework.generics import ListAPIView
 
 # Create your views here.
 
@@ -23,7 +24,29 @@ class ejemplo_request(APIView):
             nombre = serializer.validated_data['estado']
             edad = serializer.validated_data['edad']
             otra_variable=serializer.validated_data['otra_variable']
-            
-            return Response({'mensaje': f'Hola, {nombre} de {edad} años! y esta es otra variable: {otra_variable}'})
+            return Response({'mensaje': f'Hola, {nombre} de {edad} años! {otra_variable}' })
         else:
             return Response(serializer.errors, status=400)
+        
+
+
+class todos_los_eventos(ListAPIView):
+    queryset=evento.objects.all()
+    serializer_class=consulta_eventos_seri
+
+
+class unico_evento(APIView):
+    def post(self, request, format=None):
+        serializer = pedir_datos_evento(data=request.data)
+        if serializer.is_valid():
+            id = serializer.validated_data['id']
+            evento_obj = evento.objects.get(idEvento=id)
+            serializer = consulta_eventos_seri(evento_obj)  # usa el mismo objeto serializer para serializar los datos del evento
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+    
+
+class programas_lista(ListAPIView):
+    queryset=programa.objects.all()
+    serializer_class=programas_serializador
