@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.generics import ListAPIView
+from rest_framework.viewsets import ModelViewSet
 
 # Create your views here.
 
@@ -30,7 +31,7 @@ class ejemplo_request(APIView):
         
 
 
-class todos_los_eventos(ListAPIView):
+class todos_los_eventos(ModelViewSet):
     queryset=evento.objects.all()
     serializer_class=consulta_eventos_seri
 
