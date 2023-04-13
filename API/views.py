@@ -9,6 +9,7 @@ from rest_framework.viewsets import ModelViewSet
 from django.db import connection
 from django.http.response import JsonResponse
 from openpyxl import Workbook
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -92,18 +93,18 @@ def estudiantes_programa(request):
 
 
 
-def descargar_canceladas(request,fecha_inicio,fecha_fin):
+def estudiantes_programa_report(request):
     # Crear un cursor y ejecutar una consulta
     from django.db import connection
     with connection.cursor() as cursor:
-        cursor.execute(f'call reporte_ordenes_canceladas_fecha(\'{fecha_inicio}\',\'{fecha_fin}\')')
+        cursor.execute('select * from estudiantes_programa')
         datos = cursor.fetchall()
 
     # Generar el archivo de Excel
     wb = Workbook()
     ws = wb.active
-    ws.title = f'C{fecha_inicio} a {fecha_fin}'
-    ws.append(['Tecnico', 'Numero de orden', 'Numero de cuenta','Cliente','Telefono cliente','Documento Cliente','Correo Cliente','Estado de la orden','Estado Tecnico','Tipo de servicio','Fecha ingreso orden'])
+    ws.title = 'cantidad de estudiantes por programa'
+    ws.append(['id','programa','Codigo de programa','Cantidad de estudiantes'])
 
     for fila in datos:
         ws.append(list(fila))

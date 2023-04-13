@@ -11,7 +11,8 @@ urlpatterns=[
     path('consulta_evento/',unico_evento.as_view()),
     path('programas/',programas_lista.as_view()),
     path('estudiantes/',ver_estudiantes.as_view()),
-    path('estudiantes_programa/',estudiantes_programa)
+    path('estudiantes_programa/',estudiantes_programa),
+    path('reporte_estudiantes_programa/',estudiantes_programa_report)
 
 
 ]
