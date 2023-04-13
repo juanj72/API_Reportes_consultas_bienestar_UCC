@@ -41,3 +41,7 @@ class estudiante_serializer(serializers.ModelSerializer):
     class Meta:
         model = estudiante
         fields = '__all__'
+
+
+class consultar_estudiante_serializer(serializers.Serializer):
+    id=serializers.IntegerField()

@@ -12,6 +12,7 @@ urlpatterns=[
     path('programas/',programas_lista.as_view()),
     path('estudiantes/',ver_estudiantes.as_view())
 
+
 ]
 
 urlpatterns+=router_reportes.urls

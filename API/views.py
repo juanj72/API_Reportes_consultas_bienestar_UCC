@@ -61,3 +61,15 @@ class administrativos_total(ListAPIView):
 class ver_estudiantes(ListAPIView):
     queryset = estudiante.objects.all()
     serializer_class = estudiante_serializer
+    def post(self, request, format=None):
+        serializer = consultar_estudiante_serializer(data=request.data)
+        if serializer.is_valid():
+            id = serializer.validated_data['id']
+            estudiante_obj = estudiante.objects.get(idEstudiante=id)
+            serializer = estudiante_serializer(estudiante_obj)  # usa el mismo objeto serializer para serializar los datos del evento
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+
+
+        

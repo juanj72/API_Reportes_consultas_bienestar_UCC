@@ -78,7 +78,7 @@ class rol(models.Model):
 
 class perfil(models.Model):
     idPerfil = models.IntegerField(primary_key=True)
-    Rol_idRol = models.ForeignKey(rol,on_delete=models.SET_NULL,null=True)
+    Rol_idRol = models.ForeignKey(rol,on_delete=models.SET_NULL,null=True, db_column='Rol_idRol')
     class Meta:
         db_table='perfil'
 
