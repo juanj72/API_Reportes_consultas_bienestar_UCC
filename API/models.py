@@ -69,3 +69,26 @@ class programa(models.Model):
     class Meta:
         db_table = 'programa'
 
+
+class rol(models.Model):
+    idRol = models.IntegerField(primary_key=True)
+    nombre_rol=models.CharField(max_length=255)
+    class Meta:
+        db_table = 'rol'
+
+class perfil(models.Model):
+    idPerfil = models.IntegerField(primary_key=True)
+    Rol_idRol = models.ForeignKey(rol,on_delete=models.SET_NULL,null=True)
+    class Meta:
+        db_table='perfil'
+
+class estudiante(models.Model):
+    idEstudiante = models.IntegerField(primary_key=True)
+    Perfil_idPerfil = models.ForeignKey(perfil,on_delete=models.SET_NULL,null=True,db_column='Perfil_idPerfil')
+    Programa_idPrograma = models.ForeignKey(programa,on_delete=models.SET_NULL,null=True,db_column='Programa_idPrograma')
+    nombre = models.CharField(max_length=255)
+    apellido = models.CharField(max_length=255)
+    telefono = models.IntegerField()
+    codigo = models.IntegerField(unique=True)
+    class Meta:
+        db_table='estudiante'

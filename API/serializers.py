@@ -35,3 +35,9 @@ class administrativos_serializer(serializers.ModelSerializer):
     class Meta:
         model=administrativo
         fields='__all__'
+
+
+class estudiante_serializer(serializers.ModelSerializer):
+    class Meta:
+        model = estudiante
+        fields = '__all__'

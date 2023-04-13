@@ -56,3 +56,8 @@ class programas_lista(ListAPIView):
 class administrativos_total(ListAPIView):
     queryset=administrativo.objects.all()
     serializer_class=administrativos_serializer
+
+
+class ver_estudiantes(ListAPIView):
+    queryset = estudiante.objects.all()
+    serializer_class = estudiante_serializer
