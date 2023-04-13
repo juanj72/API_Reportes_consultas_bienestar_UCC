@@ -10,7 +10,8 @@ router_reportes.register(prefix='eventos',basename='eventos',viewset=todos_los_e
 urlpatterns=[
     path('consulta_evento/',unico_evento.as_view()),
     path('programas/',programas_lista.as_view()),
-    path('estudiantes/',ver_estudiantes.as_view())
+    path('estudiantes/',ver_estudiantes.as_view()),
+    path('estudiantes_programa/',estudiantes_programa)
 
 
 ]

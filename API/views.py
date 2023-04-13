@@ -6,6 +6,9 @@ from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.generics import ListAPIView
 from rest_framework.viewsets import ModelViewSet
+from django.db import connection
+from django.http.response import JsonResponse
+from openpyxl import Workbook
 
 # Create your views here.
 
@@ -14,22 +17,7 @@ from rest_framework.viewsets import ModelViewSet
 class inicio(generics.ListAPIView):
     queryset = django_migrations.objects.all()
     serializer_class=migraciones_serializador
- 
-
-
-#ejemplo para pedir datos para consulta, o guardarlos en el modelo
-class ejemplo_request(APIView):
-    def post(self, request, format=None):
-        serializer = pedir_datos_serialziador(data=request.data)
-        if serializer.is_valid():
-            nombre = serializer.validated_data['estado']
-            edad = serializer.validated_data['edad']
-            otra_variable=serializer.validated_data['otra_variable']
-            return Response({'mensaje': f'Hola, {nombre} de {edad} años! {otra_variable}' })
-        else:
-            return Response(serializer.errors, status=400)
-        
-
+       
 
 class todos_los_eventos(ModelViewSet):
     queryset=evento.objects.all()
@@ -72,4 +60,56 @@ class ver_estudiantes(ListAPIView):
             return Response(serializer.errors)
 
 
-        
+
+
+def estudiantes_programa(request):
+    with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
+
+        # Ejecutar una linea SQL En este caso llamamos un procedimiento almacenado
+        cursor.execute('select * from estudiantes_programa')
+
+        columns = []  # Para guardar el nombre de las columnas
+
+        # Recorrer la descripcion (Nombre de la columna)
+        for column in cursor.description:
+
+            columns.append(column[0])  # Guardando el nombre de las columnas
+
+        data = []  # Lista con los datos que vamos a enviar en JSON
+
+        for row in cursor.fetchall():  # Recorremos las fila guardados de la BD
+
+            # Insertamos en data un diccionario
+            data.append(dict(zip(columns, row)))
+
+        cursor.close()  # Se cierra el cursor para que se ejecute el procedimiento almacenado
+
+        connection.commit()  # Enviamos la sentencia a la BD
+        connection.close()  # Cerramos la conección
+
+        return JsonResponse(data,safe=False)
+    
+
+
+
+def descargar_canceladas(request,fecha_inicio,fecha_fin):
+    # Crear un cursor y ejecutar una consulta
+    from django.db import connection
+    with connection.cursor() as cursor:
+        cursor.execute(f'call reporte_ordenes_canceladas_fecha(\'{fecha_inicio}\',\'{fecha_fin}\')')
+        datos = cursor.fetchall()
+
+    # Generar el archivo de Excel
+    wb = Workbook()
+    ws = wb.active
+    ws.title = f'C{fecha_inicio} a {fecha_fin}'
+    ws.append(['Tecnico', 'Numero de orden', 'Numero de cuenta','Cliente','Telefono cliente','Documento Cliente','Correo Cliente','Estado de la orden','Estado Tecnico','Tipo de servicio','Fecha ingreso orden'])
+
+    for fila in datos:
+        ws.append(list(fila))
+
+    # Devolver el archivo de Excel como una respuesta
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=reporte.xlsx'
+    wb.save(response)
+    return response
