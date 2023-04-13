@@ -68,3 +68,4 @@ class programa(models.Model):
     codigo_programa=models.CharField(max_length=255)
     class Meta:
         db_table = 'programa'
+

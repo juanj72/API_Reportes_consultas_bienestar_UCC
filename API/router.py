@@ -8,7 +8,8 @@ router_reportes = DefaultRouter()
 router_reportes.register(prefix='eventos',basename='eventos',viewset=todos_los_eventos)
 
 urlpatterns=[
-    path('consulta_evento/',unico_evento.as_view())
+    path('consulta_evento/',unico_evento.as_view()),
+    path('programas/',programas_lista.as_view())
 
 ]
 
