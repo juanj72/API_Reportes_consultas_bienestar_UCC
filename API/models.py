@@ -79,6 +79,9 @@ class rol(models.Model):
 class perfil(models.Model):
     idPerfil = models.IntegerField(primary_key=True)
     Rol_idRol = models.ForeignKey(rol,on_delete=models.SET_NULL,null=True, db_column='Rol_idRol')
+    usuario = models.CharField(max_length=255)
+    correo = models.EmailField()
+    documento = models.IntegerField()
     class Meta:
         db_table='perfil'
 
@@ -92,3 +95,5 @@ class estudiante(models.Model):
     codigo = models.IntegerField(unique=True)
     class Meta:
         db_table='estudiante'
+
+

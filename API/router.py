@@ -6,6 +6,7 @@ from django.urls import path
 router_reportes = DefaultRouter()
 
 router_reportes.register(prefix='eventos',basename='eventos',viewset=todos_los_eventos)
+router_reportes.register(prefix='perfiles',basename='perfil',viewset=perfiles)
 
 urlpatterns=[
     path('consulta_evento/',unico_evento.as_view()),

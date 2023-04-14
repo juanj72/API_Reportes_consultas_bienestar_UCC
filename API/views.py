@@ -42,6 +42,11 @@ class programas_lista(ListAPIView):
     serializer_class=programas_serializador
 
 
+class perfiles(ModelViewSet):
+    queryset = perfil.objects.all()
+    serializer_class = perfil_serializer
+
+
 class administrativos_total(ListAPIView):
     queryset=administrativo.objects.all()
     serializer_class=administrativos_serializer
@@ -92,7 +97,7 @@ def estudiantes_programa(request):
     
 
 
-
+#Reportes /-----------------------------------------------------------------------------------
 def estudiantes_programa_report(request):
     # Crear un cursor y ejecutar una consulta
     from django.db import connection
