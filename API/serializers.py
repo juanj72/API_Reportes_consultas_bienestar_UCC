@@ -2,14 +2,6 @@ from rest_framework import serializers
 from API.models import *
 
 
-class migraciones_serializador(serializers.ModelSerializer):
-    class Meta:
-        model=django_migrations
-        fields='__all__'
-
-
-
-
 
 class consulta_eventos_seri(serializers.ModelSerializer):
     class Meta:

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from API.models import django_migrations,evento,programa,administrativo
+from API.models import evento,programa,administrativo
 from API.serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -15,9 +15,7 @@ from django.http import HttpResponse
 
 
 #mostrar datos de un modelo
-class inicio(generics.ListAPIView):
-    queryset = django_migrations.objects.all()
-    serializer_class=migraciones_serializador
+
        
 
 class todos_los_eventos(ModelViewSet):
