@@ -1,8 +1,23 @@
 from fastapi import FastAPI
 from modelos.reportes import Estudiantes,session
 from modelo import modelo
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+    "http://127.0.0.1",
+    "http://127.0.0.1:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 
@@ -24,7 +39,7 @@ def parametros(id:int):
 def modelo(modelo:modelo):
     return modelo
 
-@app.get('/estudiantes')
+@app.get('/api/estudiantes/')
 def ver_estudiantes():
     estudiantes=session.query(Estudiantes).all()
     return estudiantes
