@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from modelos.reportes import Estudiantes,session
+from modelos.reportes import Estudiantes,session,Eventos
 from modelo import modelo
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -43,3 +43,8 @@ def modelo(modelo:modelo):
 def ver_estudiantes():
     estudiantes=session.query(Estudiantes).all()
     return estudiantes
+
+@app.get('/api/eventos/')
+def ver_eventos():
+    eventos = session.query(Eventos).all()
+    return eventos
