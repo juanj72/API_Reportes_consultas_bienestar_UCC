@@ -1,4 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Response
+from fastapi.responses import FileResponse
+from openpyxl import Workbook
+from openpyxl.utils.dataframe import dataframe_to_rows
 from modelos.reportes import Estudiantes,session,Eventos,engine,text
 from fastapi.middleware.cors import CORSMiddleware
 import json
@@ -58,3 +61,25 @@ async def estudiantes_carrera():
 
     return jason
   
+@app.get('/reporte_excel/')
+async def generar_reporte(reponse:Response):
+    with engine.connect() as conn:
+        query = text('SELECT * FROM estudiantes_programa')
+        result = conn.execute(query)
+    # columnas = result.keys()
+    # filas = result.fetchall()
+    df=pd.DataFrame(result.fetchall(),columns=result.keys())
+    libro = Workbook()
+    hoja = libro.active
+    hoja.title='estudiantesXprograma'
+
+    for row in dataframe_to_rows(df, index=False, header=True):
+        hoja.append(row)
+
+    # Escribir los datos
+    for row in dataframe_to_rows(df, index=False, header=False):
+        hoja.append(row)
+    
+    nombre_archivo = "reporte.xlsx"
+    libro.save(nombre_archivo)
+    return FileResponse(nombre_archivo, media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
