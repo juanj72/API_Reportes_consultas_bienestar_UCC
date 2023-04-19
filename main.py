@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-from modelos.reportes import Estudiantes,session,Eventos
-from modelo import modelo
+from modelos.reportes import Estudiantes,session,Eventos,engine,text
 from fastapi.middleware.cors import CORSMiddleware
+import json
+import pandas as pd
 
 app = FastAPI()
 
@@ -22,29 +23,38 @@ app.add_middleware(
 
 
 @app.get("/")
-def read_root():
+async def read_root():
     return {"Hello": "World"}
 
-@app.get("/variable/{id}")
-def parametros_datos(id):
-
-    return {"variable":id,"message":'perro asqueroso'}
-
-@app.get('/prueba_parametro_entero/{id}')
-def parametros(id:int):
-    print()
-    return {"parametro":id}
-
-@app.post('/modelo')
-def modelo(modelo:modelo):
-    return modelo
-
 @app.get('/api/estudiantes/')
-def ver_estudiantes():
+async def ver_estudiantes():
     estudiantes=session.query(Estudiantes).all()
     return estudiantes
 
+@app.get('/api/estudiantes/{id}')
+async def ver_estudiante(id):
+    estudiante =session.query(Estudiantes).get(id)
+    return estudiante
+
 @app.get('/api/eventos/')
-def ver_eventos():
+async def ver_eventos():
     eventos = session.query(Eventos).all()
     return eventos
+
+
+@app.get('/api/estudiantes_programa/')
+async def estudiantes_carrera():
+    with engine.connect() as conn:
+        query = text('SELECT * FROM estudiantes_programa')
+        result = conn.execute(query)
+    columnas = result.keys()
+
+    # Convertir los resultados a una lista de diccionarios
+    filas = result.fetchall()
+    resultados = [dict(zip(columnas, fila)) for fila in filas]
+
+    jason=json.dumps(resultados)
+    jason=json.loads(jason)
+
+    return jason
+  
