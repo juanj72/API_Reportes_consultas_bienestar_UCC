@@ -185,3 +185,19 @@ FROM
 
     return resultados
 
+
+@app.get('/api/actividades/')
+async def actividades():
+    with engine.connect() as conn:
+        query = text('SELECT * FROM actividades')
+        result = conn.execute(query)
+    columnas = result.keys()
+
+    # Convertir los resultados a una lista de diccionarios
+    filas = result.fetchall()
+    resultados = [dict(zip(columnas, fila)) for fila in filas]
+
+    jason=json.dumps(resultados)
+    jason=json.loads(jason)
+
+    return jason
