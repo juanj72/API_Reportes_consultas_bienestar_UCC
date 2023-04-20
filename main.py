@@ -83,3 +83,42 @@ async def generar_reporte(reponse:Response):
     nombre_archivo = "reporte.xlsx"
     libro.save(nombre_archivo)
     return FileResponse(nombre_archivo, media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+
+@app.get('/api/horas_estudiante/')
+async def ver_horas_estudiantes():
+    with engine.connect() as conn:
+        query = text('SELECT * FROM horas_estudiantes')
+        result = conn.execute(query)
+    columnas = result.keys()
+
+    # Convertir los resultados a una lista de diccionarios
+    filas = result.fetchall()
+    resultados = [dict(zip(columnas, fila)) for fila in filas]
+
+    print(resultados)
+  
+
+    return resultados
+
+@app.get('/api/horas_estudiante/generar_reporte')
+async def generar_reporte_horas(response:Response):
+    with engine.connect() as conn:
+        query = text('SELECT * FROM horas_estudiantes')
+        result = conn.execute(query)
+    # columnas = result.keys()
+    # filas = result.fetchall()
+    df=pd.DataFrame(result.fetchall(),columns=result.keys())
+    libro = Workbook()
+    hoja = libro.active
+    hoja.title='estudiantesXhoras'
+
+    for row in dataframe_to_rows(df, index=False, header=True):
+        hoja.append(row)
+
+    # Escribir los datos
+    for row in dataframe_to_rows(df, index=False, header=False):
+        hoja.append(row)
+    
+    nombre_archivo = "reporte.xlsx"
+    libro.save(nombre_archivo)
+    return FileResponse(nombre_archivo, media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
