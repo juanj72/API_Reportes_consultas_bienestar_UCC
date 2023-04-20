@@ -6,6 +6,7 @@ from modelos.reportes import Estudiantes,session,Eventos,engine,text
 from fastapi.middleware.cors import CORSMiddleware
 import json
 import pandas as pd
+from consultas.cursores import horas_estudiante
 
 app = FastAPI()
 
@@ -122,3 +123,11 @@ async def generar_reporte_horas(response:Response):
     nombre_archivo = "reporte.xlsx"
     libro.save(nombre_archivo)
     return FileResponse(nombre_archivo, media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+
+
+
+@app.get('/api/informacion_estudiante/{id}')
+async def informacion_estudiante(id):
+
+
+    return horas_estudiante(id)
