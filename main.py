@@ -6,7 +6,7 @@ from modelos.reportes import Estudiantes,session,Eventos,engine,text
 from fastapi.middleware.cors import CORSMiddleware
 import json
 import pandas as pd
-from consultas.cursores import horas_estudiante
+
 
 app = FastAPI()
 
@@ -128,6 +128,60 @@ async def generar_reporte_horas(response:Response):
 
 @app.get('/api/informacion_estudiante/{id}')
 async def informacion_estudiante(id):
+    with engine.connect() as conn:
+        texto=f"""
+        SELECT 
+    est.idEstudiante,
+    est.nombre,
+    est.apellido,
+    per.usuario,
+    per.correo,
+    pro.nombre_programa,
+	horas.horas_evento,
+    horas.horas_actividad,
+	case
+    when horas.horas_evento is null
+    then horas.horas_actividad
+    when horas.horas_actividad is null 
+    then horas.horas_evento 
+    when horas.horas_evento and horas.horas_actividad is not null
+    then horas.horas_evento+horas.horas_actividad
+    end as 'total_horas'
+    
+FROM
+    estudiante est
+        LEFT JOIN
+    asistenciaevento aev ON est.idEstudiante = aev.Estudiante_idEstudiante
+        LEFT JOIN
+    asistenciaactividad aact ON aact.Estudiante_idEstudiante = est.idEstudiante
+    left join(
+    SELECT 
+    est.idEstudiante,
+    est.nombre,
+    est.apellido,
+    sum(aev.horas_registradas) AS horas_evento,
+    sum(aact.horas_registradas) AS horas_actividad
+    
+FROM
+    estudiante est
+        LEFT JOIN
+    asistenciaevento aev ON est.idEstudiante = aev.Estudiante_idEstudiante
+        LEFT JOIN
+    asistenciaactividad aact ON aact.Estudiante_idEstudiante = est.idEstudiante
+    group by est.idEstudiante
+    ) as horas on horas.idEstudiante = est.idEstudiante
+    inner join programa pro on pro.idPrograma =est.Programa_idPrograma
+    inner join perfil per on per.idPerfil = est.Perfil_idPerfil
+    where est.idEstudiante={id}
+    group by est.idEstudiante
+        """
+        query = text(texto)
+        result = conn.execute(query)
+    columnas = result.keys()
 
+    # Convertir los resultados a una lista de diccionarios
+    filas = result.fetchall()
+    resultados = [dict(zip(columnas, fila)) for fila in filas]
 
-    return horas_estudiante(id)
+    return resultados
+
