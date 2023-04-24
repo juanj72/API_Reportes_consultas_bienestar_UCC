@@ -1,4 +1,5 @@
-from fastapi import FastAPI,Response
+from fastapi import FastAPI,Response,Depends,HTTPException
+from fastapi.security import OAuth2PasswordBearer,OAuth2PasswordRequestForm
 from fastapi.responses import FileResponse
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
@@ -6,9 +7,10 @@ from modelos.reportes import Estudiantes,session,Eventos,engine,text
 from fastapi.middleware.cors import CORSMiddleware
 import json
 import pandas as pd
-
+from modelos.auth import *
 
 app = FastAPI()
+oauth2_sheme = OAuth2PasswordBearer('/token')
 
 origins = [
     "http://localhost",
@@ -41,7 +43,7 @@ async def ver_estudiante(id):
     return estudiante
 
 @app.get('/api/eventos/')
-async def ver_eventos():
+async def ver_eventos(token : str = Depends(oauth2_sheme)):
     eventos = session.query(Eventos).all()
     return eventos
 
