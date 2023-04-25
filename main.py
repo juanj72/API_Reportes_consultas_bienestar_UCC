@@ -32,6 +32,15 @@ app.add_middleware(
 async def read_root():
     return {"Hello": "World"}
 
+
+@app.post('/token')
+def login(form_data:OAuth2PasswordRequestForm=Depends()):
+    return {
+        "access_token":"papaya",
+        "token_type":"bearer"
+    }
+
+
 @app.get('/api/estudiantes/')
 async def ver_estudiantes():
     estudiantes=session.query(Estudiantes).all()
