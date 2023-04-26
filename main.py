@@ -12,6 +12,30 @@ from modelos.auth import *
 app = FastAPI()
 oauth2_sheme = OAuth2PasswordBearer('/token')
 
+
+
+fake_users_db = {
+
+    "johndoe":{
+        "username":"johndoe",
+        "full_name":"john doe",
+        "email":"johndoe@gmail.com",
+        "hashed_password":"123456",
+        "disbaled":False
+    },
+    "jorge":{
+        "username":"jorge",
+        "full_name":"jorge martinez",
+        "email":"jorge@gmail.com",
+        "hashed_password":"123456",
+        "disable":False
+    }
+
+
+}
+
+
+
 origins = [
     "http://localhost",
     "http://localhost:8080",
@@ -35,10 +59,19 @@ async def read_root():
 
 @app.post('/token')
 def login(form_data:OAuth2PasswordRequestForm=Depends()):
-    return {
-        "access_token":"papaya",
-        "token_type":"bearer"
-    }
+    user = fake_users_db.get(form_data.username)
+    if not user:
+        raise HTTPException(status_code=400,detail="Contraseña o usuarios invalidos")
+    if not form_data.password == user["hashed_password"]: 
+        raise HTTPException(status_code=400,detail="Contraseña o usuarios invalidos")
+    else:
+        return {
+            "access_token":"tomate",
+            "token_type":"bearer"
+        }
+
+
+
 
 
 @app.get('/api/estudiantes/')
