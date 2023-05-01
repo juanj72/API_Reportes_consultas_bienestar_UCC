@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser
 
 class Rol(models.Model):
     descripcion = models.CharField(max_length=255)
+    def __str__(self):
+        return str(self.descripcion)
 
 class Programa(models.Model):
     codigo = models.CharField(max_length=255)
