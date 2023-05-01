@@ -26,3 +26,9 @@ class UserAdmin (BaseUserAdmin):
     )
 
 admin.site.register(Rol)
+admin.site.register(Evento)
+admin.site.register(Administrativo)
+admin.site.register(Estudiante)
+admin.site.register(Programa)
+admin.site.register(Actividad)
+admin.site.register(Estado)

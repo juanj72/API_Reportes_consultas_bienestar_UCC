@@ -14,23 +14,31 @@ class Programa(models.Model):
 
 class Estado (models.Model):
     nombre = models.CharField(max_length=255)
+    def __str__(self):
+        return str(self.nombre)
 
 
 class Perfil(AbstractUser):
     email = models.EmailField(unique=True)
     rol = models.ForeignKey(Rol, on_delete=models.SET_NULL,null=True,blank=True)
+    def __str__(self):
+        return str(self.first_name)+' '+str(self.last_name)
 
 
 class Estudiante(models.Model):
     perfil = models.ForeignKey(Perfil,on_delete=models.SET_NULL,null=True,blank=False)
     documento = models.IntegerField()
     telefono = models.IntegerField()
+    def __str__(self):
+        return str(self.perfil)
 
 class Administrativo(models.Model):
     perfil = models.ForeignKey(Perfil,on_delete=models.SET_NULL,null=True)
     documento = models.IntegerField()
     telefono = models.IntegerField()
     cargo = models.CharField(max_length=255)
+    def __str__(self):
+        return str(self.perfil)
 
 
 class Actividad (models.Model):
