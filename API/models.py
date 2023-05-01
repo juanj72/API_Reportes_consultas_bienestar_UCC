@@ -1,85 +1,52 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
+class Rol(models.Model):
+    descripcion = models.CharField(max_length=255)
 
-
-
-
-class evento(models.Model):
-    idEvento=models.IntegerField(primary_key=True)
-    Administrativo_idAdministrativo=models.IntegerField()
-    nombre_evento=models.CharField(max_length=255)
-    descripcion=models.CharField(max_length=255)
-    fecha_inicio=models.DateTimeField()
-    fecha_final=models.DateTimeField()
-    estado=models.CharField(max_length=255)
-    correccion=models.CharField(max_length=255)
-    class Meta:
-        db_table='evento'
-
-
-
-# Create your models here.
-
-class administrativo(models.Model):
-    idAdministrativo=models.IntegerField(primary_key=True)
-    nombre = models.CharField(max_length=80)
-    apellido = models.CharField(max_length=80)
-    cargo =  models.CharField(max_length=80)
-    documento = models.CharField(max_length=20)
-    codigo = models.IntegerField()
-    
-    class Meta:
-        db_table = 'administrativo'
-
-
-
-class evento(models.Model):
-    idEvento=models.IntegerField(primary_key=True)
-    Administrativo_idAdministrativo=models.IntegerField()
-    nombre_evento=models.CharField(max_length=255)
-    descripcion=models.CharField(max_length=255)
-    fecha_inicio=models.DateTimeField()
-    fecha_final=models.DateTimeField()
-    estado=models.CharField(max_length=255)
-    correccion=models.CharField(max_length=255)
-    class Meta:
-        db_table='evento'
-
-
-class programa(models.Model):
-    idPrograma=models.IntegerField(primary_key=True)
-    nombre_programa=models.CharField(max_length=255)
-    codigo_programa=models.CharField(max_length=255)
-    class Meta:
-        db_table = 'programa'
-
-
-class rol(models.Model):
-    idRol = models.IntegerField(primary_key=True)
-    nombre_rol=models.CharField(max_length=255)
-    class Meta:
-        db_table = 'rol'
-
-class perfil(models.Model):
-    idPerfil = models.IntegerField(primary_key=True)
-    Rol_idRol = models.ForeignKey(rol,on_delete=models.SET_NULL,null=True, db_column='Rol_idRol')
-    usuario = models.CharField(max_length=255)
-    correo = models.EmailField()
-    documento = models.IntegerField()
-    class Meta:
-        db_table='perfil'
-
-class estudiante(models.Model):
-    idEstudiante = models.IntegerField(primary_key=True)
-    Perfil_idPerfil = models.ForeignKey(perfil,on_delete=models.SET_NULL,null=True,db_column='Perfil_idPerfil')
-    Programa_idPrograma = models.ForeignKey(programa,on_delete=models.SET_NULL,null=True,db_column='Programa_idPrograma')
+class Programa(models.Model):
+    codigo = models.CharField(max_length=255)
     nombre = models.CharField(max_length=255)
-    apellido = models.CharField(max_length=255)
+
+class Estado (models.Model):
+    nombre = models.CharField(max_length=255)
+
+
+class Perfil(AbstractUser):
+    email = models.EmailField(unique=True)
+    rol = models.ForeignKey(Rol, on_delete=models.SET_NULL,null=True,blank=True)
+
+
+class Estudiante(models.Model):
+    perfil = models.ForeignKey(Perfil,on_delete=models.SET_NULL,null=True,blank=False)
+    documento = models.IntegerField()
     telefono = models.IntegerField()
-    codigo = models.IntegerField(unique=True)
-    class Meta:
-        db_table='estudiante'
+
+class Administrativo(models.Model):
+    perfil = models.ForeignKey(Perfil,on_delete=models.SET_NULL,null=True)
+    documento = models.IntegerField()
+    telefono = models.IntegerField()
+    cargo = models.CharField(max_length=255)
+
+
+class Actividad (models.Model):
+    nombre = models.CharField(max_length=255)
+    administrativo = models.ForeignKey(Administrativo,on_delete=models.SET_NULL,null=True)
+    descripcion = models.TextField()
+    lugar = models.CharField(max_length=255)
+    estado = models.ForeignKey(Estado,on_delete=models.SET_NULL,null=True)
+
+class Evento (models.Model):
+    nombre = models.CharField(max_length=255)
+    administrativo = models.ForeignKey(Administrativo,on_delete=models.SET_NULL,null=True)
+    descripcion = models.TextField()
+    lugar = models.CharField(max_length=255)
+    fecha_inicio = models.DateField()
+    fecha_fin= models.DateField()
+    Estado = models.ForeignKey(Estado,on_delete=models.SET_NULL,null=True)
+
+    
 
 
