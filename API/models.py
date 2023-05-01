@@ -29,6 +29,7 @@ class Estudiante(models.Model):
     perfil = models.ForeignKey(Perfil,on_delete=models.SET_NULL,null=True,blank=False)
     documento = models.IntegerField()
     telefono = models.IntegerField()
+    programa = models.ForeignKey(Programa,on_delete=models.SET_NULL,null=True)
     def __str__(self):
         return str(self.perfil)
 
