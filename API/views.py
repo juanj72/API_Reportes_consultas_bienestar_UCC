@@ -111,3 +111,9 @@ class verEstudiantes(APIView):
             connection.close()  # Cerramos la conección
 
         return Response(data)
+    
+
+class consultaEstudiante(APIView):
+    def get(self,request,id):
+        resultados = f'hola perross {id}'
+        return Response (resultados)

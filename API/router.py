@@ -11,7 +11,9 @@ router_reportes.register(prefix='eventos',basename='evento',viewset=eventosClase
 
 urlpatterns=[
     path('mostrarEventos/',mostrarEventos.as_view()),
-    path('estudiantes/',verEstudiantes.as_view())
+    path('estudiantes/',verEstudiantes.as_view()),
+    path('consultaEstudiante/<int:id>',consultaEstudiante.as_view()),
+
    
 
 

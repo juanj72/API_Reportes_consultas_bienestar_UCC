@@ -7,6 +7,13 @@ class Rol(models.Model):
     descripcion = models.CharField(max_length=255)
     def __str__(self):
         return str(self.descripcion)
+    
+class Dia(models.Model):
+    nombre = models.CharField(max_length=255)
+    def __str__(self):
+        return str(self.nombre)
+    
+
 
 class Programa(models.Model):
     codigo = models.CharField(max_length=255)
@@ -48,6 +55,8 @@ class Actividad (models.Model):
     descripcion = models.TextField()
     lugar = models.CharField(max_length=255)
     estado = models.ForeignKey(Estado,on_delete=models.SET_NULL,null=True)
+    def __str__(self):
+        return str(self.nombre)
 
 class Evento (models.Model):
     nombre = models.CharField(max_length=255)
@@ -61,3 +70,9 @@ class Evento (models.Model):
     
 
 
+class ActividadDia(models.Model):
+    dia = models.ForeignKey(Dia,on_delete=models.SET_NULL,null=True)
+    actividad = models.ForeignKey(Actividad,on_delete=models.SET_NULL,null=True)
+    hora_inicio = models.TimeField()
+    hora_fin = models.TimeField()
+    
