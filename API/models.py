@@ -66,6 +66,8 @@ class Evento (models.Model):
     fecha_inicio = models.DateField()
     fecha_fin= models.DateField()
     Estado = models.ForeignKey(Estado,on_delete=models.SET_NULL,null=True)
+    def __str__(self):
+        return str (self.nombre)
 
     
 
@@ -76,3 +78,15 @@ class ActividadDia(models.Model):
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
     
+
+class AsistenciaEvento(models.Model):
+    estudiante = models.ForeignKey(Estudiante,on_delete=models.SET_NULL,null=True)
+    evento = models.ForeignKey(Evento,on_delete=models.SET_NULL,null=True)
+    horas_registradas = models.IntegerField()
+    fecha = models.DateTimeField(auto_now=True)
+
+class AsistenciaActividad(models.Model):
+    estudiante = models.ForeignKey(Estudiante,on_delete=models.SET_NULL,null=True)
+    actividad = models.ForeignKey(Actividad,on_delete=models.SET_NULL,null=True)
+    horas_registradas = models.IntegerField()
+    fecha = models.DateTimeField(auto_now=True)
