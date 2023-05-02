@@ -4,6 +4,7 @@ from django.urls import path,include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from API.router import router_reportes
+from rest_framework.authtoken import views
 
 
 
@@ -27,5 +28,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path(r'redocs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path(r'api/',include('API.router'))
+    path(r'api/',include('API.router')),
+  
 ]

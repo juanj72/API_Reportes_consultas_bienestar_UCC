@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'API',
     'rest_framework',
     'corsheaders',
-    'drf_yasg'
+    'drf_yasg',
+    
+
 ]
 
 MIDDLEWARE = [
@@ -73,6 +75,12 @@ CORS_ALLOW_HEADERS=list(default_headers)+[
     'contenttype',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # Otras clases de autenticación
+    ],
+}
 
 
 
