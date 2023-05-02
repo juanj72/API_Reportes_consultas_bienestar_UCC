@@ -18,6 +18,8 @@ class Dia(models.Model):
 class Programa(models.Model):
     codigo = models.CharField(max_length=255)
     nombre = models.CharField(max_length=255)
+    def __str__(self):
+        return str (self.nombre)
 
 class Estado (models.Model):
     nombre = models.CharField(max_length=255)

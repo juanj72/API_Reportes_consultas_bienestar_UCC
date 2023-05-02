@@ -25,13 +25,13 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class eventosClaseVista(ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = serializadorEventos
     queryset = Evento.objects.all()
 
 
 class mostrarEventos(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get(self,request):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
@@ -80,7 +80,7 @@ class mostrarEventos(APIView):
 
 
 class verEstudiantes(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get(self,request):
 
@@ -126,7 +126,7 @@ class verEstudiantes(APIView):
     
 
 class consultaEstudiante(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get(self,request,id):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
