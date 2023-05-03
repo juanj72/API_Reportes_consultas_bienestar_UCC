@@ -86,9 +86,14 @@ class AsistenciaEvento(models.Model):
     evento = models.ForeignKey(Evento,on_delete=models.SET_NULL,null=True)
     horas_registradas = models.IntegerField()
     fecha = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return str(self.evento)+' - '+str(self.estudiante)
 
 class AsistenciaActividad(models.Model):
     estudiante = models.ForeignKey(Estudiante,on_delete=models.SET_NULL,null=True)
     actividad = models.ForeignKey(Actividad,on_delete=models.SET_NULL,null=True)
     horas_registradas = models.IntegerField()
     fecha = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.actividad)+' - '+str(self.estudiante)

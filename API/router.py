@@ -20,6 +20,8 @@ urlpatterns=[
     path('EstudiantesPrograma/',EstudiantesPrograma.as_view()),
     path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('asistenciaActividades',asistenciaActividades.as_view()),
+    path('asistenciaEventos',asistenciaEventos.as_view())
 
 
 

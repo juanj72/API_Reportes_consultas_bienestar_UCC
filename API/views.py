@@ -215,3 +215,93 @@ class EstudiantesPrograma(APIView):
             connection.close()  # Cerramos la conección
 
         return Response(data)
+    
+
+class asistenciaActividades(APIView):
+    def get(self,request):
+        with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
+            consulta = f"""
+            SELECT 
+   
+                ac.nombre ,
+            
+                sum(asis_ac.horas_registradas) as criterio
+                
+            FROM
+                api_asistenciaactividad asis_ac
+                    INNER JOIN
+                api_actividad ac ON ac.id = asis_ac.actividad_id
+                inner join api_estudiante est on est.id = asis_ac.estudiante_id
+                inner join api_perfil pe on pe.id=est.perfil_id
+                
+                group by ac.id
+
+           """
+        # Ejecutar una linea SQL En este caso llamamos un procedimiento almacenado
+            cursor.execute(consulta)
+
+            columns = []  # Para guardar el nombre de las columnas
+
+            # Recorrer la descripcion (Nombre de la columna)
+            for column in cursor.description:
+
+                columns.append(column[0])  # Guardando el nombre de las columnas
+
+            data = []  # Lista con los datos que vamos a enviar en JSON
+
+            for row in cursor.fetchall():  # Recorremos las fila guardados de la BD
+
+                # Insertamos en data un diccionario
+                data.append(dict(zip(columns, row)))
+
+            cursor.close()  # Se cierra el cursor para que se ejecute el procedimiento almacenado
+
+            connection.commit()  # Enviamos la sentencia a la BD
+            connection.close()  # Cerramos la conección
+
+        return Response(data)
+    
+
+class asistenciaEventos(APIView):
+    def get(self,request):
+        with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
+            consulta = f"""
+            SELECT 
+   
+                    ev.nombre ,
+                
+                    count(est.id)as criterio
+                    
+                FROM
+                    api_asistenciaevento asis_ev
+                        INNER JOIN
+                    api_evento ev ON ev.id = asis_ev.evento_id
+                    inner join api_estudiante est on est.id = asis_ev.estudiante_id
+                    inner join api_perfil pe on pe.id=est.perfil_id
+                    
+                    group by ev.id
+
+           """
+        # Ejecutar una linea SQL En este caso llamamos un procedimiento almacenado
+            cursor.execute(consulta)
+
+            columns = []  # Para guardar el nombre de las columnas
+
+            # Recorrer la descripcion (Nombre de la columna)
+            for column in cursor.description:
+
+                columns.append(column[0])  # Guardando el nombre de las columnas
+
+            data = []  # Lista con los datos que vamos a enviar en JSON
+
+            for row in cursor.fetchall():  # Recorremos las fila guardados de la BD
+
+                # Insertamos en data un diccionario
+                data.append(dict(zip(columns, row)))
+
+            cursor.close()  # Se cierra el cursor para que se ejecute el procedimiento almacenado
+
+            connection.commit()  # Enviamos la sentencia a la BD
+            connection.close()  # Cerramos la conección
+
+        return Response(data)
