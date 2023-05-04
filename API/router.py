@@ -23,7 +23,9 @@ urlpatterns=[
     path('asistenciaActividades',asistenciaActividades.as_view()),
     path('asistenciaEventos',asistenciaEventos.as_view()),
     path('actividades/',Actividades.as_view()),
-    path('horasEstudiante/',HorasEstudiante.as_view())
+    path('horasEstudiante/',HorasEstudiante.as_view()),
+    path('totalAsistenciaEv/',estAsistenciaEv.as_view()),
+    path('totalAsistenciaAct',estAsistenciaAct.as_view())
 
 
 
