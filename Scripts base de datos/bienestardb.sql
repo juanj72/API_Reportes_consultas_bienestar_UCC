@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-05-2023 a las 05:13:56
+-- Tiempo de generación: 04-05-2023 a las 10:22:07
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -43,7 +43,9 @@ CREATE TABLE `api_actividad` (
 INSERT INTO `api_actividad` (`id`, `nombre`, `descripcion`, `lugar`, `administrativo_id`, `estado_id`) VALUES
 (1, 'instrumentos musicales', 'tecnica vocal, guitarra, cuatro, maracas, arpa', 'kiosco', 1, 1),
 (2, 'futbol', 'entrenamientos de alto rendimiento para juegos ASCUN', 'cancha de futbol 11', 1, 1),
-(3, 'espacios de lectura', 'consejos para una buena lectura y abstraccion de esta', 'Biblioteca', 1, 1);
+(3, 'espacios de lectura', 'consejos para una buena lectura y abstraccion de esta', 'Biblioteca', 1, 1),
+(4, 'basquetball', 'hacer la mayor cantidad de cestas en una clase', 'polideprotivo pequeño', 1, 1),
+(5, 'natacion', 'ir a nadar con los peces para aprender de ellos (datos de prueba)', 'psicina olimpica imder', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -64,7 +66,10 @@ CREATE TABLE `api_actividaddia` (
 --
 
 INSERT INTO `api_actividaddia` (`id`, `hora_inicio`, `hora_fin`, `actividad_id`, `dia_id`) VALUES
-(1, '16:00:00.000000', '19:00:00.000000', 1, 2);
+(1, '16:00:00.000000', '19:00:00.000000', 1, 2),
+(2, '13:00:00.000000', '16:00:00.000000', 2, 4),
+(3, '17:00:00.000000', '20:00:00.000000', 3, 3),
+(4, '12:00:00.000000', '14:00:00.000000', 5, 6);
 
 -- --------------------------------------------------------
 
@@ -108,7 +113,12 @@ CREATE TABLE `api_asistenciaactividad` (
 INSERT INTO `api_asistenciaactividad` (`id`, `horas_registradas`, `fecha`, `actividad_id`, `estudiante_id`) VALUES
 (1, 2, '2023-05-02 01:43:17.106227', 1, 1),
 (2, 4, '2023-05-02 01:43:24.458876', 1, 1),
-(3, 4, '2023-05-02 01:43:35.014039', 3, 2);
+(3, 4, '2023-05-02 01:43:35.014039', 3, 2),
+(4, 4, '2023-05-03 14:15:31.714187', 5, 4),
+(5, 4, '2023-05-03 14:15:38.315603', 2, 5),
+(6, 6, '2023-05-03 14:15:51.285806', 4, 4),
+(7, 8, '2023-05-03 14:16:22.481814', 3, 10),
+(8, 4, '2023-05-03 14:16:37.683012', 2, 9);
 
 -- --------------------------------------------------------
 
@@ -133,7 +143,15 @@ INSERT INTO `api_asistenciaevento` (`id`, `horas_registradas`, `fecha`, `estudia
 (2, 1, '2023-05-02 01:24:59.283969', 2, 1),
 (3, 4, '2023-05-02 01:28:49.776263', 1, 1),
 (4, 4, '2023-05-02 01:29:13.511605', 1, 1),
-(5, 4, '2023-05-02 01:29:26.272875', 1, 2);
+(5, 4, '2023-05-02 01:29:26.272875', 1, 2),
+(6, 2, '2023-05-03 15:01:52.540957', 4, 2),
+(7, 2, '2023-05-03 15:06:15.908512', 5, 3),
+(8, 4, '2023-05-03 15:06:27.458864', 11, 4),
+(9, 2, '2023-05-03 15:07:55.435866', 7, 3),
+(10, 3, '2023-05-03 15:08:32.403762', 2, 4),
+(11, 2, '2023-05-03 15:08:47.563152', 6, 4),
+(12, 2, '2023-05-03 15:09:00.166672', 8, 4),
+(13, 3, '2023-05-03 15:09:09.423234', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -200,7 +218,14 @@ INSERT INTO `api_estudiante` (`id`, `documento`, `telefono`, `perfil_id`, `progr
 (1, 1006810369, 232156, 1, 1),
 (2, 211903752, 2147483647, 3, 3),
 (3, 449449, 2147483647, 4, 4),
-(4, 446931, 2541154, NULL, 3);
+(4, 446931, 2541154, 6, 3),
+(5, 79891, 1651, 5, 8),
+(6, 9841, 1561561, 7, 6),
+(7, 2244455, 233541, 8, 3),
+(8, 12894, 321454, 9, 1),
+(9, 89563, 32546, 10, 7),
+(10, 8546, 45784, 11, 8),
+(11, 9862, 59845, 12, 2);
 
 -- --------------------------------------------------------
 
@@ -225,7 +250,9 @@ CREATE TABLE `api_evento` (
 
 INSERT INTO `api_evento` (`id`, `nombre`, `descripcion`, `lugar`, `fecha_inicio`, `fecha_fin`, `Estado_id`, `administrativo_id`) VALUES
 (1, 'feria del emprendimiento', 'exposicion de emprendimientos de tecnología', 'Auditorio', '2023-05-03', '2023-05-07', 1, 1),
-(2, 'flisol', 'Exposicion de software libre para todos', 'Universidad de los llanoa', '2023-05-07', '2023-05-08', 1, 1);
+(2, 'flisol', 'Exposicion de software libre para todos', 'Universidad de los llanoa', '2023-05-07', '2023-05-08', 1, 1),
+(3, 'Jornada masiva', 'actividades recreativas para promover la salud mental', 'cancha de futbol 11', '2023-05-06', '2023-05-06', 1, 1),
+(4, 'Conferencia procesamiento de imagenes', 'conferencia de procesamiento de imagenes para la deteccion de cancer', 'auditorio universidad cooperativa sede kirpas', '2023-05-04', '2023-05-04', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -256,7 +283,15 @@ INSERT INTO `api_perfil` (`id`, `password`, `last_login`, `is_superuser`, `usern
 (1, 'pbkdf2_sha256$390000$or1t5AQhrBnjVBXRDgy4sF$sMT7SY2oEKye389HxYFLpFDIcgL7omNwzuc/kRd2zN4=', '2023-05-01 20:24:25.604973', 1, 'juan', 'Juan José', 'Jara Álvarez', 1, 1, '2023-05-01 20:23:51.790956', 'juan.jara@campusucc.edu.co', 2),
 (2, 'pbkdf2_sha256$390000$Rq2ebPgxBCGXuzSmO1T5o0$Fy6S1Nv4dP4RaStCPhLVuUF9cbXqJ4LLqpb/SvvuYJ8=', NULL, 0, 'gerente', 'karlos', 'araujo', 0, 1, '2023-05-01 20:34:19.338342', 'karlos.araujo@campusucc.edu.co', 2),
 (3, 'pbkdf2_sha256$390000$EBuNdtLxlsCtqPosMqc7FT$7rIE/G4uIadxhc8h/mOSEZDFmap5sH/LLY34YvjoHN8=', NULL, 0, 'danielas', 'Daniela', 'Silva Tejedor', 0, 1, '2023-05-01 23:13:10.627600', 'daniela.silva@campusucc.edu.co', 1),
-(4, 'pbkdf2_sha256$390000$60F2cZdb4wDtU3y6ECAQOn$iPxlUNXoeFJ/6tRO61ovaKsuIO9BqOphAJSBe1LedD4=', NULL, 0, 'carlos', 'Carlos', 'Garcia', 0, 1, '2023-05-01 23:14:29.773476', 'carlos.garcia@campusucc.edu.co', 1);
+(4, 'pbkdf2_sha256$390000$60F2cZdb4wDtU3y6ECAQOn$iPxlUNXoeFJ/6tRO61ovaKsuIO9BqOphAJSBe1LedD4=', NULL, 0, 'carlos', 'Carlos', 'Garcia', 0, 1, '2023-05-01 23:14:29.773476', 'carlos.garcia@campusucc.edu.co', 1),
+(5, 'pbkdf2_sha256$390000$LuHaY6w2TaYpCqKin7cz4g$NImHfds1J2tbW1hja83oKfw5bXs5UUkANbiCQKA0I5k=', NULL, 0, 'arnoldo', 'arnoldo', 'iguaran', 0, 1, '2023-05-02 20:09:23.458597', 'arnoldo.iguaran@campusucc.edu.co', 1),
+(6, 'pbkdf2_sha256$390000$wW4saTKLDMhlivgMyYhzed$x12XEXgSB0wsDFSxiTR6G0xk+tg3ZeZChSL2XpoMrFs=', NULL, 0, 'pedroc', 'pedro', 'coral', 0, 1, '2023-05-02 20:11:49.956499', 'pedro.coral@campusucc.edu.co', 1),
+(7, 'pbkdf2_sha256$390000$BgFvWluqciwDRPlrg2GuEz$RfpH8PODHFe3WZwThIYbFOY9LmH99VrXjo0zD/vkxs0=', NULL, 0, 'katherinem', 'katherine', 'morales', 0, 1, '2023-05-02 20:12:54.013397', 'katherine.morales@campusucc.edu.co', 1),
+(8, 'pbkdf2_sha256$390000$dK7uUel0vGt32QSoKTNA3o$FPYKqnBrdItc2PU2kUJLHH3nFysagb+4VQVsemMB5vM=', NULL, 0, 'gjara', 'german', 'jara', 0, 1, '2023-05-02 20:17:40.026669', 'gjara@campusucc.edu.co', 1),
+(9, 'pbkdf2_sha256$390000$Gcm9kVaIkHxo0HGSPkKqzy$PQPU1ebeup9achrG3Y0LmhgbNSZ8qzJ7Udk9QD5IJnc=', NULL, 0, 'gmurcia', 'geovany', 'murcia', 0, 1, '2023-05-02 20:22:56.157020', 'gmurcia@campusucc.edu.co', 1),
+(10, 'pbkdf2_sha256$390000$qtYIPycBVxMlW5bjg3Enom$QpsjU3WE2d67IPWzT6WyOSYdV4KqEmNgoMe//guW91M=', NULL, 0, 'robertob', 'Roberto', 'Baggio', 0, 1, '2023-05-02 20:55:36.444460', 'roberto.baggio@campusucc.edu.co', 1),
+(11, 'pbkdf2_sha256$390000$LPCXz1yRpLYLKBpaLUrmNt$F6Rb1Kw6FQJZvqhxRfGol6JNCIap4BoGGStgakjiqbk=', NULL, 0, 'lalop', 'lalo', 'perez', 0, 1, '2023-05-02 20:58:09.454492', 'lalo.perez@campusucc.edu.co', 1),
+(12, 'pbkdf2_sha256$390000$nb3UGaEq2YE4HByF9YoboU$ErfR9O3bRDD3u0H64QCruO3wxTGgTTvYniBcimwJH7c=', NULL, 0, 'omarp', 'omar', 'perez', 0, 1, '2023-05-02 21:01:15.923704', 'omar.perez@campusucc.edu.co', 1);
 
 -- --------------------------------------------------------
 
@@ -326,6 +361,25 @@ CREATE TABLE `api_rol` (
 INSERT INTO `api_rol` (`id`, `descripcion`) VALUES
 (1, 'Estudiante'),
 (2, 'Administrador');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `authtoken_token`
+--
+
+CREATE TABLE `authtoken_token` (
+  `key` varchar(40) NOT NULL,
+  `created` datetime(6) NOT NULL,
+  `user_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `authtoken_token`
+--
+
+INSERT INTO `authtoken_token` (`key`, `created`, `user_id`) VALUES
+('dba1cba72f7c7869db61e67009e956a33aaa876e', '2023-05-02 16:55:10.706236', 1);
 
 -- --------------------------------------------------------
 
@@ -435,7 +489,15 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (65, 'Can add asistencia actividad', 17, 'add_asistenciaactividad'),
 (66, 'Can change asistencia actividad', 17, 'change_asistenciaactividad'),
 (67, 'Can delete asistencia actividad', 17, 'delete_asistenciaactividad'),
-(68, 'Can view asistencia actividad', 17, 'view_asistenciaactividad');
+(68, 'Can view asistencia actividad', 17, 'view_asistenciaactividad'),
+(69, 'Can add Token', 18, 'add_token'),
+(70, 'Can change Token', 18, 'change_token'),
+(71, 'Can delete Token', 18, 'delete_token'),
+(72, 'Can view Token', 18, 'view_token'),
+(73, 'Can add token', 19, 'add_tokenproxy'),
+(74, 'Can change token', 19, 'change_tokenproxy'),
+(75, 'Can delete token', 19, 'delete_tokenproxy'),
+(76, 'Can view token', 19, 'view_tokenproxy');
 
 -- --------------------------------------------------------
 
@@ -490,7 +552,51 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 (29, '2023-05-02 01:29:26.283660', '5', 'AsistenciaEvento object (5)', 1, '[{\"added\": {}}]', 16, 1),
 (30, '2023-05-02 01:43:17.118103', '1', 'AsistenciaActividad object (1)', 1, '[{\"added\": {}}]', 17, 1),
 (31, '2023-05-02 01:43:24.469503', '2', 'AsistenciaActividad object (2)', 1, '[{\"added\": {}}]', 17, 1),
-(32, '2023-05-02 01:43:35.014882', '3', 'AsistenciaActividad object (3)', 1, '[{\"added\": {}}]', 17, 1);
+(32, '2023-05-02 01:43:35.014882', '3', 'AsistenciaActividad object (3)', 1, '[{\"added\": {}}]', 17, 1),
+(33, '2023-05-02 20:09:23.701005', '5', ' ', 1, '[{\"added\": {}}]', 10, 1),
+(34, '2023-05-02 20:09:56.735945', '5', 'arnoldo iguaran', 2, '[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Email\", \"Rol\"]}}]', 10, 1),
+(35, '2023-05-02 20:10:14.009207', '5', 'arnoldo iguaran', 1, '[{\"added\": {}}]', 12, 1),
+(36, '2023-05-02 20:11:50.172916', '6', ' ', 1, '[{\"added\": {}}]', 10, 1),
+(37, '2023-05-02 20:12:13.333187', '6', 'pedro coral', 2, '[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Email\", \"Rol\"]}}]', 10, 1),
+(38, '2023-05-02 20:12:24.660339', '4', 'pedro coral', 2, '[{\"changed\": {\"fields\": [\"Perfil\"]}}]', 12, 1),
+(39, '2023-05-02 20:12:54.243793', '7', ' ', 1, '[{\"added\": {}}]', 10, 1),
+(40, '2023-05-02 20:13:15.985857', '7', 'katherine morales', 2, '[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Email\", \"Rol\"]}}]', 10, 1),
+(41, '2023-05-02 20:13:32.217089', '6', 'katherine morales', 1, '[{\"added\": {}}]', 12, 1),
+(42, '2023-05-02 20:17:40.253399', '8', ' ', 1, '[{\"added\": {}}]', 10, 1),
+(43, '2023-05-02 20:17:57.559575', '8', 'german jara', 2, '[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Email\", \"Rol\"]}}]', 10, 1),
+(44, '2023-05-02 20:18:25.026211', '7', 'german jara', 1, '[{\"added\": {}}]', 12, 1),
+(45, '2023-05-02 20:22:56.405807', '9', ' ', 1, '[{\"added\": {}}]', 10, 1),
+(46, '2023-05-02 20:23:18.820763', '9', 'geovany murcia', 2, '[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Email\", \"Rol\"]}}]', 10, 1),
+(47, '2023-05-02 20:23:39.291615', '8', 'geovany murcia', 1, '[{\"added\": {}}]', 12, 1),
+(48, '2023-05-02 20:55:36.662294', '10', ' ', 1, '[{\"added\": {}}]', 10, 1),
+(49, '2023-05-02 20:55:56.313495', '10', 'Roberto Baggio', 2, '[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Email\", \"Rol\"]}}]', 10, 1),
+(50, '2023-05-02 20:56:46.034141', '9', 'Roberto Baggio', 1, '[{\"added\": {}}]', 12, 1),
+(51, '2023-05-02 20:58:09.672004', '11', ' ', 1, '[{\"added\": {}}]', 10, 1),
+(52, '2023-05-02 20:58:46.702329', '11', 'lalo perez', 2, '[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Email\", \"Rol\"]}}]', 10, 1),
+(53, '2023-05-02 20:59:23.585358', '10', 'lalo perez', 1, '[{\"added\": {}}]', 12, 1),
+(54, '2023-05-02 21:01:16.140366', '12', ' ', 1, '[{\"added\": {}}]', 10, 1),
+(55, '2023-05-02 21:01:36.163192', '12', 'omar perez', 2, '[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Email\", \"Rol\"]}}]', 10, 1),
+(56, '2023-05-02 21:01:54.285980', '11', 'omar perez', 1, '[{\"added\": {}}]', 12, 1),
+(57, '2023-05-03 14:13:25.044351', '4', 'basquetball', 1, '[{\"added\": {}}]', 13, 1),
+(58, '2023-05-03 14:14:03.262151', '5', 'natacion', 1, '[{\"added\": {}}]', 13, 1),
+(59, '2023-05-03 14:15:31.755362', '4', 'natacion - pedro coral', 1, '[{\"added\": {}}]', 17, 1),
+(60, '2023-05-03 14:15:38.322109', '5', 'futbol - arnoldo iguaran', 1, '[{\"added\": {}}]', 17, 1),
+(61, '2023-05-03 14:15:51.327077', '6', 'basquetball - pedro coral', 1, '[{\"added\": {}}]', 17, 1),
+(62, '2023-05-03 14:16:22.524614', '7', 'espacios de lectura - lalo perez', 1, '[{\"added\": {}}]', 17, 1),
+(63, '2023-05-03 14:16:37.731010', '8', 'futbol - Roberto Baggio', 1, '[{\"added\": {}}]', 17, 1),
+(64, '2023-05-03 15:01:52.542335', '6', 'flisol - pedro coral', 1, '[{\"added\": {}}]', 16, 1),
+(65, '2023-05-03 15:04:17.171875', '3', 'Jornada masiva', 1, '[{\"added\": {}}]', 11, 1),
+(66, '2023-05-03 15:06:02.441009', '4', 'Conferencia procesamiento de imagenes', 1, '[{\"added\": {}}]', 11, 1),
+(67, '2023-05-03 15:06:15.916972', '7', 'Jornada masiva - arnoldo iguaran', 1, '[{\"added\": {}}]', 16, 1),
+(68, '2023-05-03 15:06:27.471298', '8', 'Conferencia procesamiento de imagenes - omar perez', 1, '[{\"added\": {}}]', 16, 1),
+(69, '2023-05-03 15:07:55.449512', '9', 'Jornada masiva - german jara', 1, '[{\"added\": {}}]', 16, 1),
+(70, '2023-05-03 15:08:32.416596', '10', 'Conferencia procesamiento de imagenes - Daniela Silva Tejedor', 1, '[{\"added\": {}}]', 16, 1),
+(71, '2023-05-03 15:08:47.565149', '11', 'Conferencia procesamiento de imagenes - katherine morales', 1, '[{\"added\": {}}]', 16, 1),
+(72, '2023-05-03 15:09:00.179446', '12', 'Conferencia procesamiento de imagenes - geovany murcia', 1, '[{\"added\": {}}]', 16, 1),
+(73, '2023-05-03 15:09:09.435386', '13', 'feria del emprendimiento - pedro coral', 1, '[{\"added\": {}}]', 16, 1),
+(74, '2023-05-04 05:33:53.723321', '2', 'ActividadDia object (2)', 1, '[{\"added\": {}}]', 15, 1),
+(75, '2023-05-04 05:34:20.110302', '3', 'ActividadDia object (3)', 1, '[{\"added\": {}}]', 15, 1),
+(76, '2023-05-04 05:37:03.567433', '4', 'ActividadDia object (4)', 1, '[{\"added\": {}}]', 15, 1);
 
 -- --------------------------------------------------------
 
@@ -524,6 +630,8 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (9, 'API', 'rol'),
 (3, 'auth', 'group'),
 (2, 'auth', 'permission'),
+(18, 'authtoken', 'token'),
+(19, 'authtoken', 'tokenproxy'),
 (4, 'contenttypes', 'contenttype'),
 (5, 'sessions', 'session');
 
@@ -567,7 +675,10 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (20, 'API', '0002_estudiante_programa', '2023-05-01 23:04:17.247171'),
 (21, 'API', '0003_dia_actividaddia', '2023-05-01 23:58:24.766110'),
 (22, 'API', '0004_asistenciaevento', '2023-05-02 01:23:41.989425'),
-(23, 'API', '0005_asistenciaactividad', '2023-05-02 01:37:58.079386');
+(23, 'API', '0005_asistenciaactividad', '2023-05-02 01:37:58.079386'),
+(24, 'authtoken', '0001_initial', '2023-05-02 16:45:58.619417'),
+(25, 'authtoken', '0002_auto_20160226_1747', '2023-05-02 16:45:58.653929'),
+(26, 'authtoken', '0003_tokenproxy', '2023-05-02 16:45:58.656870');
 
 -- --------------------------------------------------------
 
@@ -697,6 +808,13 @@ ALTER TABLE `api_rol`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `authtoken_token`
+--
+ALTER TABLE `authtoken_token`
+  ADD PRIMARY KEY (`key`),
+  ADD UNIQUE KEY `user_id` (`user_id`);
+
+--
 -- Indices de la tabla `auth_group`
 --
 ALTER TABLE `auth_group`
@@ -754,13 +872,13 @@ ALTER TABLE `django_session`
 -- AUTO_INCREMENT de la tabla `api_actividad`
 --
 ALTER TABLE `api_actividad`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `api_actividaddia`
 --
 ALTER TABLE `api_actividaddia`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `api_administrativo`
@@ -772,13 +890,13 @@ ALTER TABLE `api_administrativo`
 -- AUTO_INCREMENT de la tabla `api_asistenciaactividad`
 --
 ALTER TABLE `api_asistenciaactividad`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `api_asistenciaevento`
 --
 ALTER TABLE `api_asistenciaevento`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `api_dia`
@@ -796,19 +914,19 @@ ALTER TABLE `api_estado`
 -- AUTO_INCREMENT de la tabla `api_estudiante`
 --
 ALTER TABLE `api_estudiante`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `api_evento`
 --
 ALTER TABLE `api_evento`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `api_perfil`
 --
 ALTER TABLE `api_perfil`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `api_perfil_groups`
@@ -850,25 +968,25 @@ ALTER TABLE `auth_group_permissions`
 -- AUTO_INCREMENT de la tabla `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT de la tabla `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT de la tabla `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Restricciones para tablas volcadas
@@ -941,6 +1059,12 @@ ALTER TABLE `api_perfil_groups`
 ALTER TABLE `api_perfil_user_permissions`
   ADD CONSTRAINT `API_perfil_user_perm_permission_id_bcc84698_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
   ADD CONSTRAINT `API_perfil_user_permissions_perfil_id_0c8f8a6f_fk_API_perfil_id` FOREIGN KEY (`perfil_id`) REFERENCES `api_perfil` (`id`);
+
+--
+-- Filtros para la tabla `authtoken_token`
+--
+ALTER TABLE `authtoken_token`
+  ADD CONSTRAINT `authtoken_token_user_id_35299eff_fk_API_perfil_id` FOREIGN KEY (`user_id`) REFERENCES `api_perfil` (`id`);
 
 --
 -- Filtros para la tabla `auth_group_permissions`
