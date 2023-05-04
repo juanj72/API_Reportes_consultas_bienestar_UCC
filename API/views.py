@@ -131,20 +131,20 @@ class consultaEstudiante(APIView):
     def get(self,request,id):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = f"""
-            SELECT 
+                 SELECT 
     est.id,
     est.documento,
     CONCAT(pe.first_name, ' ', pe.last_name) AS estudiante,
     pe.email,
-    sum(asis.horas_registradas) as horas_eventos,
-    sum(asis_ac.horas_registradas) as horas_actividades,
-     sum(asis.horas_registradas)+sum(asis_ac.horas_registradas) as total_horas
+    sum(coalesce(asis.horas_registradas,0)) as horas_eventos,
+    sum(coalesce(asis_ac.horas_registradas,0)) as horas_actividades,
+     sum(coalesce(asis.horas_registradas,0))+sum(coalesce(asis_ac.horas_registradas,0)) as total_horas
     
 FROM
     api_estudiante est
         INNER JOIN
     api_perfil pe ON pe.id = est.perfil_id
-        INNER JOIN
+        left JOIN
     api_asistenciaevento asis ON asis.estudiante_id = est.id
     left join api_asistenciaactividad asis_ac on asis_ac.estudiante_id=est.id 
     
