@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-05-2023 a las 10:22:07
+-- Tiempo de generación: 18-05-2023 a las 18:00:40
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -118,7 +118,10 @@ INSERT INTO `api_asistenciaactividad` (`id`, `horas_registradas`, `fecha`, `acti
 (5, 4, '2023-05-03 14:15:38.315603', 2, 5),
 (6, 6, '2023-05-03 14:15:51.285806', 4, 4),
 (7, 8, '2023-05-03 14:16:22.481814', 3, 10),
-(8, 4, '2023-05-03 14:16:37.683012', 2, 9);
+(8, 4, '2023-05-03 14:16:37.683012', 2, 9),
+(9, 3, '2023-05-04 23:34:09.412950', 5, 2),
+(10, 2, '2023-05-11 20:49:33.802630', 3, 1),
+(11, 2, '2023-05-11 20:50:46.728744', 5, 2);
 
 -- --------------------------------------------------------
 
@@ -151,7 +154,10 @@ INSERT INTO `api_asistenciaevento` (`id`, `horas_registradas`, `fecha`, `estudia
 (10, 3, '2023-05-03 15:08:32.403762', 2, 4),
 (11, 2, '2023-05-03 15:08:47.563152', 6, 4),
 (12, 2, '2023-05-03 15:09:00.166672', 8, 4),
-(13, 3, '2023-05-03 15:09:09.423234', 4, 1);
+(13, 3, '2023-05-03 15:09:09.423234', 4, 1),
+(14, 2, '2023-05-04 16:09:34.272700', 9, 3),
+(15, 2, '2023-05-04 16:10:01.713715', 4, 2),
+(16, 2, '2023-05-11 20:53:42.690127', 1, 5);
 
 -- --------------------------------------------------------
 
@@ -225,7 +231,8 @@ INSERT INTO `api_estudiante` (`id`, `documento`, `telefono`, `perfil_id`, `progr
 (8, 12894, 321454, 9, 1),
 (9, 89563, 32546, 10, 7),
 (10, 8546, 45784, 11, 8),
-(11, 9862, 59845, 12, 2);
+(11, 9862, 59845, 12, 2),
+(12, 125132, 2315623, 13, 5);
 
 -- --------------------------------------------------------
 
@@ -252,7 +259,8 @@ INSERT INTO `api_evento` (`id`, `nombre`, `descripcion`, `lugar`, `fecha_inicio`
 (1, 'feria del emprendimiento', 'exposicion de emprendimientos de tecnología', 'Auditorio', '2023-05-03', '2023-05-07', 1, 1),
 (2, 'flisol', 'Exposicion de software libre para todos', 'Universidad de los llanoa', '2023-05-07', '2023-05-08', 1, 1),
 (3, 'Jornada masiva', 'actividades recreativas para promover la salud mental', 'cancha de futbol 11', '2023-05-06', '2023-05-06', 1, 1),
-(4, 'Conferencia procesamiento de imagenes', 'conferencia de procesamiento de imagenes para la deteccion de cancer', 'auditorio universidad cooperativa sede kirpas', '2023-05-04', '2023-05-04', 1, 1);
+(4, 'Conferencia procesamiento de imagenes', 'conferencia de procesamiento de imagenes para la deteccion de cancer', 'auditorio universidad cooperativa sede kirpas', '2023-05-04', '2023-05-04', 1, 1),
+(5, 'Conferencia introduccion al mundo laboral de software', 'conferencia de empresas de software y como ingresar al mundo laboral', 'auditorio universidad cooperativa sede kirpas', '2023-05-11', '2023-05-11', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -280,7 +288,7 @@ CREATE TABLE `api_perfil` (
 --
 
 INSERT INTO `api_perfil` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `is_staff`, `is_active`, `date_joined`, `email`, `rol_id`) VALUES
-(1, 'pbkdf2_sha256$390000$or1t5AQhrBnjVBXRDgy4sF$sMT7SY2oEKye389HxYFLpFDIcgL7omNwzuc/kRd2zN4=', '2023-05-01 20:24:25.604973', 1, 'juan', 'Juan José', 'Jara Álvarez', 1, 1, '2023-05-01 20:23:51.790956', 'juan.jara@campusucc.edu.co', 2),
+(1, 'pbkdf2_sha256$390000$or1t5AQhrBnjVBXRDgy4sF$sMT7SY2oEKye389HxYFLpFDIcgL7omNwzuc/kRd2zN4=', '2023-05-11 20:48:18.784005', 1, 'juan', 'Juan José', 'Jara Álvarez', 1, 1, '2023-05-01 20:23:51.790956', 'juan.jara@campusucc.edu.co', 2),
 (2, 'pbkdf2_sha256$390000$Rq2ebPgxBCGXuzSmO1T5o0$Fy6S1Nv4dP4RaStCPhLVuUF9cbXqJ4LLqpb/SvvuYJ8=', NULL, 0, 'gerente', 'karlos', 'araujo', 0, 1, '2023-05-01 20:34:19.338342', 'karlos.araujo@campusucc.edu.co', 2),
 (3, 'pbkdf2_sha256$390000$EBuNdtLxlsCtqPosMqc7FT$7rIE/G4uIadxhc8h/mOSEZDFmap5sH/LLY34YvjoHN8=', NULL, 0, 'danielas', 'Daniela', 'Silva Tejedor', 0, 1, '2023-05-01 23:13:10.627600', 'daniela.silva@campusucc.edu.co', 1),
 (4, 'pbkdf2_sha256$390000$60F2cZdb4wDtU3y6ECAQOn$iPxlUNXoeFJ/6tRO61ovaKsuIO9BqOphAJSBe1LedD4=', NULL, 0, 'carlos', 'Carlos', 'Garcia', 0, 1, '2023-05-01 23:14:29.773476', 'carlos.garcia@campusucc.edu.co', 1),
@@ -291,7 +299,8 @@ INSERT INTO `api_perfil` (`id`, `password`, `last_login`, `is_superuser`, `usern
 (9, 'pbkdf2_sha256$390000$Gcm9kVaIkHxo0HGSPkKqzy$PQPU1ebeup9achrG3Y0LmhgbNSZ8qzJ7Udk9QD5IJnc=', NULL, 0, 'gmurcia', 'geovany', 'murcia', 0, 1, '2023-05-02 20:22:56.157020', 'gmurcia@campusucc.edu.co', 1),
 (10, 'pbkdf2_sha256$390000$qtYIPycBVxMlW5bjg3Enom$QpsjU3WE2d67IPWzT6WyOSYdV4KqEmNgoMe//guW91M=', NULL, 0, 'robertob', 'Roberto', 'Baggio', 0, 1, '2023-05-02 20:55:36.444460', 'roberto.baggio@campusucc.edu.co', 1),
 (11, 'pbkdf2_sha256$390000$LPCXz1yRpLYLKBpaLUrmNt$F6Rb1Kw6FQJZvqhxRfGol6JNCIap4BoGGStgakjiqbk=', NULL, 0, 'lalop', 'lalo', 'perez', 0, 1, '2023-05-02 20:58:09.454492', 'lalo.perez@campusucc.edu.co', 1),
-(12, 'pbkdf2_sha256$390000$nb3UGaEq2YE4HByF9YoboU$ErfR9O3bRDD3u0H64QCruO3wxTGgTTvYniBcimwJH7c=', NULL, 0, 'omarp', 'omar', 'perez', 0, 1, '2023-05-02 21:01:15.923704', 'omar.perez@campusucc.edu.co', 1);
+(12, 'pbkdf2_sha256$390000$nb3UGaEq2YE4HByF9YoboU$ErfR9O3bRDD3u0H64QCruO3wxTGgTTvYniBcimwJH7c=', NULL, 0, 'omarp', 'omar', 'perez', 0, 1, '2023-05-02 21:01:15.923704', 'omar.perez@campusucc.edu.co', 1),
+(13, 'pbkdf2_sha256$390000$n1R6HsUjoAEzlYLgBwtTRn$Lb09VjJmo88a0TobmfBZk82eBHXjdJrHdnTStrmq7xs=', NULL, 0, 'kampeche', 'kampeche', 'dousdebes', 0, 1, '2023-05-04 21:16:33.158892', 'kampeche@campusucc.edu.co', 1);
 
 -- --------------------------------------------------------
 
@@ -596,7 +605,17 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 (73, '2023-05-03 15:09:09.435386', '13', 'feria del emprendimiento - pedro coral', 1, '[{\"added\": {}}]', 16, 1),
 (74, '2023-05-04 05:33:53.723321', '2', 'ActividadDia object (2)', 1, '[{\"added\": {}}]', 15, 1),
 (75, '2023-05-04 05:34:20.110302', '3', 'ActividadDia object (3)', 1, '[{\"added\": {}}]', 15, 1),
-(76, '2023-05-04 05:37:03.567433', '4', 'ActividadDia object (4)', 1, '[{\"added\": {}}]', 15, 1);
+(76, '2023-05-04 05:37:03.567433', '4', 'ActividadDia object (4)', 1, '[{\"added\": {}}]', 15, 1),
+(77, '2023-05-04 16:09:34.287352', '14', 'Jornada masiva - Roberto Baggio', 1, '[{\"added\": {}}]', 16, 1),
+(78, '2023-05-04 16:10:01.726469', '15', 'flisol - pedro coral', 1, '[{\"added\": {}}]', 16, 1),
+(79, '2023-05-04 21:16:33.389730', '13', ' ', 1, '[{\"added\": {}}]', 10, 1),
+(80, '2023-05-04 21:16:53.784094', '13', 'kampeche dousdebes', 2, '[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Email\", \"Rol\"]}}]', 10, 1),
+(81, '2023-05-04 21:17:50.247543', '12', 'kampeche dousdebes', 1, '[{\"added\": {}}]', 12, 1),
+(82, '2023-05-04 23:34:09.418010', '9', 'natacion - Daniela Silva Tejedor', 1, '[{\"added\": {}}]', 17, 1),
+(83, '2023-05-11 20:49:33.803627', '10', 'espacios de lectura - Juan José Jara Álvarez', 1, '[{\"added\": {}}]', 17, 1),
+(84, '2023-05-11 20:50:46.733026', '11', 'natacion - Daniela Silva Tejedor', 1, '[{\"added\": {}}]', 17, 1),
+(85, '2023-05-11 20:53:17.351006', '5', 'Conferencia introduccion al mundo laboral de software', 1, '[{\"added\": {}}]', 11, 1),
+(86, '2023-05-11 20:53:42.692089', '16', 'Conferencia introduccion al mundo laboral de software - Juan José Jara Álvarez', 1, '[{\"added\": {}}]', 16, 1);
 
 -- --------------------------------------------------------
 
@@ -697,7 +716,8 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
-('m4u9otbbcwyl8icll0777esm7oy2c1zz', '.eJxVjEEOwiAQRe_C2hBKGWBcuvcMZGBAqoYmpV0Z765NutDtf-_9lwi0rTVsPS9hYnEWgzj9bpHSI7cd8J3abZZpbusyRbkr8qBdXmfOz8vh_h1U6vVbEzNwGUxURRu0I4MbuUBmiMhWa0IyaBxq79FGiAm8Ssk6pOKK8Uq8P_OIN_U:1pta4P:AeR940bCRV14R1lDz_XnkxguLKsNxnJkK8_MXehougM', '2023-05-15 20:24:25.604973');
+('m4u9otbbcwyl8icll0777esm7oy2c1zz', '.eJxVjEEOwiAQRe_C2hBKGWBcuvcMZGBAqoYmpV0Z765NutDtf-_9lwi0rTVsPS9hYnEWgzj9bpHSI7cd8J3abZZpbusyRbkr8qBdXmfOz8vh_h1U6vVbEzNwGUxURRu0I4MbuUBmiMhWa0IyaBxq79FGiAm8Ssk6pOKK8Uq8P_OIN_U:1pta4P:AeR940bCRV14R1lDz_XnkxguLKsNxnJkK8_MXehougM', '2023-05-15 20:24:25.604973'),
+('xxcekgs7yk0d7vc9k04102y2xp1ph3kt', '.eJxVjEEOwiAQRe_C2hBKGWBcuvcMZGBAqoYmpV0Z765NutDtf-_9lwi0rTVsPS9hYnEWgzj9bpHSI7cd8J3abZZpbusyRbkr8qBdXmfOz8vh_h1U6vVbEzNwGUxURRu0I4MbuUBmiMhWa0IyaBxq79FGiAm8Ssk6pOKK8Uq8P_OIN_U:1pxDD0:JDpmPnuLxa9Tp24eSZzdbktsiIdobX8OE7N49obQ7tk', '2023-05-25 20:48:18.787893');
 
 --
 -- Índices para tablas volcadas
@@ -890,13 +910,13 @@ ALTER TABLE `api_administrativo`
 -- AUTO_INCREMENT de la tabla `api_asistenciaactividad`
 --
 ALTER TABLE `api_asistenciaactividad`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `api_asistenciaevento`
 --
 ALTER TABLE `api_asistenciaevento`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `api_dia`
@@ -914,19 +934,19 @@ ALTER TABLE `api_estado`
 -- AUTO_INCREMENT de la tabla `api_estudiante`
 --
 ALTER TABLE `api_estudiante`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `api_evento`
 --
 ALTER TABLE `api_evento`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `api_perfil`
 --
 ALTER TABLE `api_perfil`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `api_perfil_groups`
@@ -974,7 +994,7 @@ ALTER TABLE `auth_permission`
 -- AUTO_INCREMENT de la tabla `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT de la tabla `django_content_type`
