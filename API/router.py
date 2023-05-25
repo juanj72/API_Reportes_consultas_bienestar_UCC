@@ -25,14 +25,9 @@ urlpatterns=[
     path('actividades/',Actividades.as_view()),
     path('horasEstudiante/',HorasEstudiante.as_view()),
     path('totalAsistenciaEv/',estAsistenciaEv.as_view()),
-    path('totalAsistenciaAct',estAsistenciaAct.as_view())
-
-
-
-   
-
-
-
+    path('totalAsistenciaAct',estAsistenciaAct.as_view()),
+    path('programarReporte', CambiarEstadoReporte.as_view()),
+    path('reporteUpdate', ReporteAutomaticoView.as_view()),
 ]
 
 urlpatterns+=router_reportes.urls

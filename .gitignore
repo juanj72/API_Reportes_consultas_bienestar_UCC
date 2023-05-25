@@ -2,4 +2,8 @@
 
 /entorno
 
+__pycache__
+
+.env
+
 

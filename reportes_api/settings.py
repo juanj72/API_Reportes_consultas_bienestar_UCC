@@ -12,10 +12,20 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from corsheaders.defaults import default_headers
+import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Creamos una instancia de la clase Env para gestionar las variables de entorno
+env = environ.Env(
+    EMAIL_PORT=(int),
+    EMAIL_USE_TLS=(bool)
+)
+
+# Cargamos las variables de entorno desde el archivo .env
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -42,7 +52,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'drf_yasg',
-    
 
 ]
 
@@ -122,7 +131,7 @@ DATABASES = {
         'NAME': 'bienestardb',
         'USER':'root',
         'PASSWORD':'',
-        'PORT':'3306',
+        'PORT':'3308',
         'HOST':'localhost',
         'OPTIONS':{
             'ssl':True
@@ -175,3 +184,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'API.Perfil'
+
+# Email config
+
+EMAIL_HOST=env('EMAIL_HOST')
+EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER=env('EMAIL_HOST_USER')
+EMAIL_PORT=env('EMAIL_PORT')
+EMAIL_USE_TLS=env('EMAIL_USE_TLS')

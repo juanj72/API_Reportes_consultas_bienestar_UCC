@@ -13,15 +13,14 @@ from API.models import *
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+
+from API.tasks import *
 
 # Create your views here.
 
 
-#mostrar datos de un modelo
-
-
-
-
+# mostrar datos de un modelo
 
 
 class eventosClaseVista(ModelViewSet):
@@ -33,7 +32,7 @@ class eventosClaseVista(ModelViewSet):
 class mostrarEventos(APIView):
     # permission_classes = [IsAuthenticated]
 
-    def get(self,request):
+    def get(self, request):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = """
             SELECT 
@@ -62,7 +61,8 @@ class mostrarEventos(APIView):
             # Recorrer la descripcion (Nombre de la columna)
             for column in cursor.description:
 
-                columns.append(column[0])  # Guardando el nombre de las columnas
+                # Guardando el nombre de las columnas
+                columns.append(column[0])
 
             data = []  # Lista con los datos que vamos a enviar en JSON
 
@@ -82,7 +82,7 @@ class mostrarEventos(APIView):
 class verEstudiantes(APIView):
     # permission_classes = [IsAuthenticated]
 
-    def get(self,request):
+    def get(self, request):
 
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = """
@@ -108,7 +108,8 @@ class verEstudiantes(APIView):
             # Recorrer la descripcion (Nombre de la columna)
             for column in cursor.description:
 
-                columns.append(column[0])  # Guardando el nombre de las columnas
+                # Guardando el nombre de las columnas
+                columns.append(column[0])
 
             data = []  # Lista con los datos que vamos a enviar en JSON
 
@@ -123,12 +124,12 @@ class verEstudiantes(APIView):
             connection.close()  # Cerramos la conección
 
         return Response(data)
-    
+
 
 class consultaEstudiante(APIView):
     # permission_classes = [IsAuthenticated]
 
-    def get(self,request,id):
+    def get(self, request, id):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = f"""
                  SELECT 
@@ -160,7 +161,8 @@ FROM
             # Recorrer la descripcion (Nombre de la columna)
             for column in cursor.description:
 
-                columns.append(column[0])  # Guardando el nombre de las columnas
+                # Guardando el nombre de las columnas
+                columns.append(column[0])
 
             data = []  # Lista con los datos que vamos a enviar en JSON
 
@@ -175,11 +177,10 @@ FROM
             connection.close()  # Cerramos la conección
 
         return Response(data)
-    
 
 
 class EstudiantesPrograma(APIView):
-    def get(self,request):
+    def get(self, request):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = f"""
             SELECT 
@@ -200,7 +201,8 @@ class EstudiantesPrograma(APIView):
             # Recorrer la descripcion (Nombre de la columna)
             for column in cursor.description:
 
-                columns.append(column[0])  # Guardando el nombre de las columnas
+                # Guardando el nombre de las columnas
+                columns.append(column[0])
 
             data = []  # Lista con los datos que vamos a enviar en JSON
 
@@ -215,10 +217,10 @@ class EstudiantesPrograma(APIView):
             connection.close()  # Cerramos la conección
 
         return Response(data)
-    
+
 
 class asistenciaActividades(APIView):
-    def get(self,request):
+    def get(self, request):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = f"""
             SELECT 
@@ -245,7 +247,8 @@ class asistenciaActividades(APIView):
             # Recorrer la descripcion (Nombre de la columna)
             for column in cursor.description:
 
-                columns.append(column[0])  # Guardando el nombre de las columnas
+                # Guardando el nombre de las columnas
+                columns.append(column[0])
 
             data = []  # Lista con los datos que vamos a enviar en JSON
 
@@ -260,10 +263,10 @@ class asistenciaActividades(APIView):
             connection.close()  # Cerramos la conección
 
         return Response(data)
-    
+
 
 class asistenciaEventos(APIView):
-    def get(self,request):
+    def get(self, request):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = f"""
             SELECT 
@@ -290,7 +293,8 @@ class asistenciaEventos(APIView):
             # Recorrer la descripcion (Nombre de la columna)
             for column in cursor.description:
 
-                columns.append(column[0])  # Guardando el nombre de las columnas
+                # Guardando el nombre de las columnas
+                columns.append(column[0])
 
             data = []  # Lista con los datos que vamos a enviar en JSON
 
@@ -308,7 +312,7 @@ class asistenciaEventos(APIView):
 
 
 class Actividades(APIView):
-    def get(self,request):
+    def get(self, request):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = f"""
           SELECT 
@@ -331,7 +335,8 @@ FROM
             # Recorrer la descripcion (Nombre de la columna)
             for column in cursor.description:
 
-                columns.append(column[0])  # Guardando el nombre de las columnas
+                # Guardando el nombre de las columnas
+                columns.append(column[0])
 
             data = []  # Lista con los datos que vamos a enviar en JSON
 
@@ -346,10 +351,10 @@ FROM
             connection.close()  # Cerramos la conección
 
         return Response(data)
-    
+
 
 class HorasEstudiante(APIView):
-    def get(self,request):
+    def get(self, request):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = f"""
              SELECT 
@@ -383,7 +388,8 @@ FROM
             # Recorrer la descripcion (Nombre de la columna)
             for column in cursor.description:
 
-                columns.append(column[0])  # Guardando el nombre de las columnas
+                # Guardando el nombre de las columnas
+                columns.append(column[0])
 
             data = []  # Lista con los datos que vamos a enviar en JSON
 
@@ -401,7 +407,7 @@ FROM
 
 
 class estAsistenciaEv(APIView):
-    def get(self,request):
+    def get(self, request):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = f"""
             SELECT 
@@ -429,7 +435,8 @@ FROM
             # Recorrer la descripcion (Nombre de la columna)
             for column in cursor.description:
 
-                columns.append(column[0])  # Guardando el nombre de las columnas
+                # Guardando el nombre de las columnas
+                columns.append(column[0])
 
             data = []  # Lista con los datos que vamos a enviar en JSON
 
@@ -444,9 +451,10 @@ FROM
             connection.close()  # Cerramos la conección
 
         return Response(data)
-    
+
+
 class estAsistenciaAct(APIView):
-    def get(self,request):
+    def get(self, request):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = f"""
             SELECT 
@@ -473,7 +481,8 @@ class estAsistenciaAct(APIView):
             # Recorrer la descripcion (Nombre de la columna)
             for column in cursor.description:
 
-                columns.append(column[0])  # Guardando el nombre de las columnas
+                # Guardando el nombre de las columnas
+                columns.append(column[0])
 
             data = []  # Lista con los datos que vamos a enviar en JSON
 
@@ -488,3 +497,56 @@ class estAsistenciaAct(APIView):
             connection.close()  # Cerramos la conección
 
         return Response(data)
+
+
+class CambiarEstadoReporte(APIView):
+
+    def put(self, request):
+
+        id = request.query_params['id_administrativo']
+        administrador = Administrativo.objects.get(id=id)
+        administrador.reporte = not administrador.reporte
+
+        if (administrador.reporte):
+
+            administrador.save()
+
+            tarea = Tarea.objects.get(administrador_id=administrador.id)
+
+            id = programar_tarea(tarea.dia, tarea.hora, tarea.minuto)
+
+            tarea.task_id = id
+            tarea.save()
+
+        else:
+
+            tarea = Tarea.objects.get(administrador_id=administrador.id)
+
+            administrador.save()
+
+            remove_tarea(tarea.task_id)
+
+        return Response(status=status.HTTP_200_OK)
+
+
+class ReporteAutomaticoView(APIView):
+
+    def put(self, request):
+
+        id = request.query_params['id_administrativo']
+        reporte = Tarea.objects.get(administrador=id)
+
+        serializer = ReporteUpdateSerializer(reporte, data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+
+            remove_tarea(reporte.task_id)
+
+            # Actualizar los datos del serializador con el nuevo task_id
+            serializer.validated_data['task_id'] = programar_tarea(
+                reporte.dia, reporte.hora, reporte.minuto)
+
+            serializer.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
