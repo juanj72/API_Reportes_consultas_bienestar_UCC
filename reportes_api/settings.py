@@ -36,7 +36,7 @@ SECRET_KEY = 'django-insecure-6=cf_*g#0#cnm0iec$a5me-kxs37n0jh%_6fh8il+y6e7b4v*+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -131,7 +131,7 @@ DATABASES = {
         'NAME': 'bienestardb',
         'USER':'root',
         'PASSWORD':'',
-        'PORT':'3308',
+        'PORT':'3306',
         'HOST':'localhost',
         'OPTIONS':{
             'ssl':True
