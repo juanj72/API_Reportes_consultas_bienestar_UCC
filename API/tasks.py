@@ -18,11 +18,13 @@ def generar_reporte_y_enviar_correo():
     archivo = os.path.join(settings.BASE_DIR, 'reportes/reporte.xlsx')
     data = response.json()
 
+    print(data)
+
     # Convertir el JSON a DataFrame
     df = pd.DataFrame(data)
 
     # Guardar el DataFrame en un archivo Excel
-    df.to_excel(archivo, index=False)
+    df.to_excel(archivo)
 
     # Crea un objeto EmailMessage con el asunto, cuerpo y dirección de correo electrónico
     mensaje = EmailMessage(
@@ -43,9 +45,9 @@ def programar_tarea(dia, hora, minuto):
 
     global scheduler
 
-    task = scheduler.add_job(generar_reporte_y_enviar_correo,
-                             'cron', day_of_week=dia, hour=hora, minute=minuto)
-    # task = scheduler.add_job(generar_reporte_y_enviar_correo, 'interval', seconds=10)
+    # task = scheduler.add_job(generar_reporte_y_enviar_correo,
+    #                          'cron', day_of_week=dia, hour=hora, minute=minuto)
+    task = scheduler.add_job(generar_reporte_y_enviar_correo, 'interval', seconds=10)
 
     return task.id
 

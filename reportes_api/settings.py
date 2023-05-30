@@ -14,6 +14,7 @@ from pathlib import Path
 from corsheaders.defaults import default_headers
 import os
 import environ
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -89,6 +90,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         # Otras clases de autenticación
     ],
+    'TOKEN_EXPIRATION': datetime.timedelta(days=7),
 }
 
 
@@ -184,6 +186,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'API.Perfil'
+
+# SIMPLE_JWT ={
+#     'ACCES_TOKEN_LIFETIME':datetime.timedelta(days=120)
+# }
 
 # Email config
 

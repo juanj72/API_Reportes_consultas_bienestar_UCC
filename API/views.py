@@ -221,7 +221,7 @@ class EstudiantesPrograma(APIView):
 
 
 class asistenciaActividades(APIView):
-    permission_classes=[IsAuthenticated]
+    # permission_classes=[IsAuthenticated]
     def get(self, request):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = f"""
