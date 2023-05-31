@@ -23,6 +23,12 @@ from API.tasks import *
 # mostrar datos de un modelo
 
 
+
+class tareasModelViewSet(ModelViewSet):
+    queryset = Tarea.objects.all()
+    serializer_class = tareaSerializer
+
+
 class eventosClaseVista(ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = serializadorEventos
@@ -221,7 +227,7 @@ class EstudiantesPrograma(APIView):
 
 
 class asistenciaActividades(APIView):
-    # permission_classes=[IsAuthenticated]
+   
     def get(self, request):
         with connection.cursor() as cursor:  # Activamos un cursor para las consultas a la BD
             consulta = f"""
@@ -507,7 +513,7 @@ class estAsistenciaAct(APIView):
 
 
 class CambiarEstadoReporte(APIView):
-    permission_classes=[IsAuthenticated]
+    
     def put(self, request):
 
         id = request.query_params['id_administrativo']

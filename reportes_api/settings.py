@@ -40,6 +40,11 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(days=2)
+}
+
+
 # Application definition
 
 INSTALLED_APPS = [

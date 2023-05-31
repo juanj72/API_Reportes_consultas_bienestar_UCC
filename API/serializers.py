@@ -20,3 +20,8 @@ class ReporteUpdateSerializer(serializers.ModelSerializer):
         model = Tarea
         fields = ['dia','hora','minuto']
     
+
+class tareaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tarea
+        fields = '__all__'

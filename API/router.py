@@ -10,6 +10,7 @@ from rest_framework_simplejwt.views import (
 router_reportes = DefaultRouter()
 
 router_reportes.register(prefix='eventos',basename='evento',viewset=eventosClaseVista)
+router_reportes.register(prefix='Tareas',basename='Tarea',viewset=tareasModelViewSet)
 
 
 
@@ -28,6 +29,7 @@ urlpatterns=[
     path('totalAsistenciaAct',estAsistenciaAct.as_view()),
     path('programarReporte', CambiarEstadoReporte.as_view()),
     path('reporteUpdate', ReporteAutomaticoView.as_view()),
+    
 ]
 
 urlpatterns+=router_reportes.urls

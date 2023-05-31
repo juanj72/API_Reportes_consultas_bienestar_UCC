@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-05-2023 a las 18:00:40
+-- Tiempo de generación: 31-05-2023 a las 14:33:54
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -82,15 +82,39 @@ CREATE TABLE `api_administrativo` (
   `documento` int(11) NOT NULL,
   `telefono` int(11) NOT NULL,
   `cargo` varchar(255) NOT NULL,
-  `perfil_id` bigint(20) DEFAULT NULL
+  `perfil_id` bigint(20) DEFAULT NULL,
+  `reporte` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `api_administrativo`
 --
 
-INSERT INTO `api_administrativo` (`id`, `documento`, `telefono`, `cargo`, `perfil_id`) VALUES
-(1, 56417, 2147483647, 'gerente', 2);
+INSERT INTO `api_administrativo` (`id`, `documento`, `telefono`, `cargo`, `perfil_id`, `reporte`) VALUES
+(1, 56417, 2147483647, 'gerente', 2, 1);
+
+--
+-- Disparadores `api_administrativo`
+--
+DELIMITER $$
+CREATE TRIGGER `CrearReporte` AFTER UPDATE ON `api_administrativo` FOR EACH ROW IF OLD.reporte <> NEW.reporte AND NEW.reporte=1 THEN
+	
+    INSERT INTO api_tarea 
+    (administrador_id, dia, hora, minuto)
+    VALUES (NEW.id, 4, 21, 0);
+    
+END IF
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `EliminarReporte` AFTER UPDATE ON `api_administrativo` FOR EACH ROW IF OLD.reporte <> NEW.reporte AND NEW.reporte = 0 THEN
+	
+    DELETE FROM api_tarea
+    WHERE administrador_id = NEW.id;
+    
+END IF
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -112,7 +136,6 @@ CREATE TABLE `api_asistenciaactividad` (
 
 INSERT INTO `api_asistenciaactividad` (`id`, `horas_registradas`, `fecha`, `actividad_id`, `estudiante_id`) VALUES
 (1, 2, '2023-05-02 01:43:17.106227', 1, 1),
-(2, 4, '2023-05-02 01:43:24.458876', 1, 1),
 (3, 4, '2023-05-02 01:43:35.014039', 3, 2),
 (4, 4, '2023-05-03 14:15:31.714187', 5, 4),
 (5, 4, '2023-05-03 14:15:38.315603', 2, 5),
@@ -121,7 +144,11 @@ INSERT INTO `api_asistenciaactividad` (`id`, `horas_registradas`, `fecha`, `acti
 (8, 4, '2023-05-03 14:16:37.683012', 2, 9),
 (9, 3, '2023-05-04 23:34:09.412950', 5, 2),
 (10, 2, '2023-05-11 20:49:33.802630', 3, 1),
-(11, 2, '2023-05-11 20:50:46.728744', 5, 2);
+(11, 2, '2023-05-11 20:50:46.728744', 5, 2),
+(12, 2, '2023-05-19 00:26:39.370281', 1, 2),
+(13, 2, '2023-05-26 00:45:28.489349', 1, 1),
+(14, 4, '2023-05-26 00:45:50.924491', 2, 5),
+(15, 2, '2023-05-26 01:23:24.284468', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -157,7 +184,8 @@ INSERT INTO `api_asistenciaevento` (`id`, `horas_registradas`, `fecha`, `estudia
 (13, 3, '2023-05-03 15:09:09.423234', 4, 1),
 (14, 2, '2023-05-04 16:09:34.272700', 9, 3),
 (15, 2, '2023-05-04 16:10:01.713715', 4, 2),
-(16, 2, '2023-05-11 20:53:42.690127', 1, 5);
+(16, 2, '2023-05-11 20:53:42.690127', 1, 5),
+(17, 2, '2023-05-18 22:56:46.769863', 2, 5);
 
 -- --------------------------------------------------------
 
@@ -288,7 +316,7 @@ CREATE TABLE `api_perfil` (
 --
 
 INSERT INTO `api_perfil` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `is_staff`, `is_active`, `date_joined`, `email`, `rol_id`) VALUES
-(1, 'pbkdf2_sha256$390000$or1t5AQhrBnjVBXRDgy4sF$sMT7SY2oEKye389HxYFLpFDIcgL7omNwzuc/kRd2zN4=', '2023-05-11 20:48:18.784005', 1, 'juan', 'Juan José', 'Jara Álvarez', 1, 1, '2023-05-01 20:23:51.790956', 'juan.jara@campusucc.edu.co', 2),
+(1, 'pbkdf2_sha256$390000$or1t5AQhrBnjVBXRDgy4sF$sMT7SY2oEKye389HxYFLpFDIcgL7omNwzuc/kRd2zN4=', '2023-05-26 00:43:39.855879', 1, 'juan', 'Juan José', 'Jara Álvarez', 1, 1, '2023-05-01 20:23:51.790956', 'juan.jara@campusucc.edu.co', 2),
 (2, 'pbkdf2_sha256$390000$Rq2ebPgxBCGXuzSmO1T5o0$Fy6S1Nv4dP4RaStCPhLVuUF9cbXqJ4LLqpb/SvvuYJ8=', NULL, 0, 'gerente', 'karlos', 'araujo', 0, 1, '2023-05-01 20:34:19.338342', 'karlos.araujo@campusucc.edu.co', 2),
 (3, 'pbkdf2_sha256$390000$EBuNdtLxlsCtqPosMqc7FT$7rIE/G4uIadxhc8h/mOSEZDFmap5sH/LLY34YvjoHN8=', NULL, 0, 'danielas', 'Daniela', 'Silva Tejedor', 0, 1, '2023-05-01 23:13:10.627600', 'daniela.silva@campusucc.edu.co', 1),
 (4, 'pbkdf2_sha256$390000$60F2cZdb4wDtU3y6ECAQOn$iPxlUNXoeFJ/6tRO61ovaKsuIO9BqOphAJSBe1LedD4=', NULL, 0, 'carlos', 'Carlos', 'Garcia', 0, 1, '2023-05-01 23:14:29.773476', 'carlos.garcia@campusucc.edu.co', 1),
@@ -370,6 +398,28 @@ CREATE TABLE `api_rol` (
 INSERT INTO `api_rol` (`id`, `descripcion`) VALUES
 (1, 'Estudiante'),
 (2, 'Administrador');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `api_tarea`
+--
+
+CREATE TABLE `api_tarea` (
+  `id` bigint(20) NOT NULL,
+  `dia` int(11) DEFAULT NULL,
+  `hora` int(11) DEFAULT NULL,
+  `task_id` varchar(255) DEFAULT NULL,
+  `administrador_id` bigint(20) NOT NULL,
+  `minuto` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `api_tarea`
+--
+
+INSERT INTO `api_tarea` (`id`, `dia`, `hora`, `task_id`, `administrador_id`, `minuto`) VALUES
+(14, 4, 21, '2532f3628d844cada2592e73f30764ec', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -506,7 +556,11 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (73, 'Can add token', 19, 'add_tokenproxy'),
 (74, 'Can change token', 19, 'change_tokenproxy'),
 (75, 'Can delete token', 19, 'delete_tokenproxy'),
-(76, 'Can view token', 19, 'view_tokenproxy');
+(76, 'Can view token', 19, 'view_tokenproxy'),
+(77, 'Can add tarea', 20, 'add_tarea'),
+(78, 'Can change tarea', 20, 'change_tarea'),
+(79, 'Can delete tarea', 20, 'delete_tarea'),
+(80, 'Can view tarea', 20, 'view_tarea');
 
 -- --------------------------------------------------------
 
@@ -615,7 +669,13 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 (83, '2023-05-11 20:49:33.803627', '10', 'espacios de lectura - Juan José Jara Álvarez', 1, '[{\"added\": {}}]', 17, 1),
 (84, '2023-05-11 20:50:46.733026', '11', 'natacion - Daniela Silva Tejedor', 1, '[{\"added\": {}}]', 17, 1),
 (85, '2023-05-11 20:53:17.351006', '5', 'Conferencia introduccion al mundo laboral de software', 1, '[{\"added\": {}}]', 11, 1),
-(86, '2023-05-11 20:53:42.692089', '16', 'Conferencia introduccion al mundo laboral de software - Juan José Jara Álvarez', 1, '[{\"added\": {}}]', 16, 1);
+(86, '2023-05-11 20:53:42.692089', '16', 'Conferencia introduccion al mundo laboral de software - Juan José Jara Álvarez', 1, '[{\"added\": {}}]', 16, 1),
+(87, '2023-05-18 22:56:46.777825', '17', 'Conferencia introduccion al mundo laboral de software - Daniela Silva Tejedor', 1, '[{\"added\": {}}]', 16, 1),
+(88, '2023-05-18 23:56:04.097094', '2', 'instrumentos musicales - Juan José Jara Álvarez', 3, '', 17, 1),
+(89, '2023-05-19 00:26:39.371819', '12', 'instrumentos musicales - Daniela Silva Tejedor', 1, '[{\"added\": {}}]', 17, 1),
+(90, '2023-05-26 00:45:28.489349', '13', 'instrumentos musicales - Juan José Jara Álvarez', 1, '[{\"added\": {}}]', 17, 1),
+(91, '2023-05-26 00:45:50.924491', '14', 'futbol - arnoldo iguaran', 1, '[{\"added\": {}}]', 17, 1),
+(92, '2023-05-26 01:23:24.284468', '15', 'instrumentos musicales - Daniela Silva Tejedor', 1, '[{\"added\": {}}]', 17, 1);
 
 -- --------------------------------------------------------
 
@@ -647,6 +707,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (10, 'API', 'perfil'),
 (8, 'API', 'programa'),
 (9, 'API', 'rol'),
+(20, 'API', 'tarea'),
 (3, 'auth', 'group'),
 (2, 'auth', 'permission'),
 (18, 'authtoken', 'token'),
@@ -697,7 +758,11 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (23, 'API', '0005_asistenciaactividad', '2023-05-02 01:37:58.079386'),
 (24, 'authtoken', '0001_initial', '2023-05-02 16:45:58.619417'),
 (25, 'authtoken', '0002_auto_20160226_1747', '2023-05-02 16:45:58.653929'),
-(26, 'authtoken', '0003_tokenproxy', '2023-05-02 16:45:58.656870');
+(26, 'authtoken', '0003_tokenproxy', '2023-05-02 16:45:58.656870'),
+(27, 'API', '0006_administrativo_reporte', '2023-05-25 15:44:14.480529'),
+(28, 'API', '0007_tarea', '2023-05-25 15:44:14.547636'),
+(29, 'API', '0008_tarea_minuto_alter_tarea_task_id', '2023-05-25 15:44:14.606079'),
+(30, 'API', '0009_alter_tarea_dia', '2023-05-25 15:44:14.645351');
 
 -- --------------------------------------------------------
 
@@ -716,6 +781,7 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('ggcspd0qznwmn6fnjoeg77k3ko03mkiw', '.eJxVjEEOwiAQRe_C2hBKGWBcuvcMZGBAqoYmpV0Z765NutDtf-_9lwi0rTVsPS9hYnEWgzj9bpHSI7cd8J3abZZpbusyRbkr8qBdXmfOz8vh_h1U6vVbEzNwGUxURRu0I4MbuUBmiMhWa0IyaBxq79FGiAm8Ssk6pOKK8Uq8P_OIN_U:1q2LYR:o2TRkSXoxVozRhkjSb4h-r4ie7nvAaxowNlpv0iQW_k', '2023-06-09 00:43:39.855879'),
 ('m4u9otbbcwyl8icll0777esm7oy2c1zz', '.eJxVjEEOwiAQRe_C2hBKGWBcuvcMZGBAqoYmpV0Z765NutDtf-_9lwi0rTVsPS9hYnEWgzj9bpHSI7cd8J3abZZpbusyRbkr8qBdXmfOz8vh_h1U6vVbEzNwGUxURRu0I4MbuUBmiMhWa0IyaBxq79FGiAm8Ssk6pOKK8Uq8P_OIN_U:1pta4P:AeR940bCRV14R1lDz_XnkxguLKsNxnJkK8_MXehougM', '2023-05-15 20:24:25.604973'),
 ('xxcekgs7yk0d7vc9k04102y2xp1ph3kt', '.eJxVjEEOwiAQRe_C2hBKGWBcuvcMZGBAqoYmpV0Z765NutDtf-_9lwi0rTVsPS9hYnEWgzj9bpHSI7cd8J3abZZpbusyRbkr8qBdXmfOz8vh_h1U6vVbEzNwGUxURRu0I4MbuUBmiMhWa0IyaBxq79FGiAm8Ssk6pOKK8Uq8P_OIN_U:1pxDD0:JDpmPnuLxa9Tp24eSZzdbktsiIdobX8OE7N49obQ7tk', '2023-05-25 20:48:18.787893');
 
@@ -828,6 +894,13 @@ ALTER TABLE `api_rol`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `api_tarea`
+--
+ALTER TABLE `api_tarea`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `API_tarea_administrador_id_0736f60c_fk_API_administrativo_id` (`administrador_id`);
+
+--
 -- Indices de la tabla `authtoken_token`
 --
 ALTER TABLE `authtoken_token`
@@ -910,13 +983,13 @@ ALTER TABLE `api_administrativo`
 -- AUTO_INCREMENT de la tabla `api_asistenciaactividad`
 --
 ALTER TABLE `api_asistenciaactividad`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `api_asistenciaevento`
 --
 ALTER TABLE `api_asistenciaevento`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `api_dia`
@@ -973,6 +1046,12 @@ ALTER TABLE `api_rol`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de la tabla `api_tarea`
+--
+ALTER TABLE `api_tarea`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT de la tabla `auth_group`
 --
 ALTER TABLE `auth_group`
@@ -988,25 +1067,25 @@ ALTER TABLE `auth_group_permissions`
 -- AUTO_INCREMENT de la tabla `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT de la tabla `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT de la tabla `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Restricciones para tablas volcadas
@@ -1079,6 +1158,12 @@ ALTER TABLE `api_perfil_groups`
 ALTER TABLE `api_perfil_user_permissions`
   ADD CONSTRAINT `API_perfil_user_perm_permission_id_bcc84698_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
   ADD CONSTRAINT `API_perfil_user_permissions_perfil_id_0c8f8a6f_fk_API_perfil_id` FOREIGN KEY (`perfil_id`) REFERENCES `api_perfil` (`id`);
+
+--
+-- Filtros para la tabla `api_tarea`
+--
+ALTER TABLE `api_tarea`
+  ADD CONSTRAINT `API_tarea_administrador_id_0736f60c_fk_API_administrativo_id` FOREIGN KEY (`administrador_id`) REFERENCES `api_administrativo` (`id`);
 
 --
 -- Filtros para la tabla `authtoken_token`

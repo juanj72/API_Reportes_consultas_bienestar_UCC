@@ -31,7 +31,7 @@ def generar_reporte_y_enviar_correo():
         subject='Correo con archivo adjunto',
         body='Adjunto encontrará el archivo que solicitó.',
         from_email=settings.EMAIL_HOST_USER,
-        to=['camilost1408@gmail.com'],
+        to=['juanjara1078@gmail.com'],
     )
 
     # Adjunta el archivo al correo electrónico
@@ -45,9 +45,9 @@ def programar_tarea(dia, hora, minuto):
 
     global scheduler
 
-    # task = scheduler.add_job(generar_reporte_y_enviar_correo,
-    #                          'cron', day_of_week=dia, hour=hora, minute=minuto)
-    task = scheduler.add_job(generar_reporte_y_enviar_correo, 'interval', seconds=10)
+    task = scheduler.add_job(generar_reporte_y_enviar_correo,
+                             'cron', day_of_week=dia, hour=hora, minute=minuto)
+    # task = scheduler.add_job(generar_reporte_y_enviar_correo, 'interval', seconds=10)
 
     return task.id
 
